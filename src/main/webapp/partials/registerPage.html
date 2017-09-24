@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Bootstrap Core CSS -->
+  	<!-- <link href="../assets/css/bootstrap.css" rel="stylesheet"> -->
+
+   <!-- Custom CSS -->
+    <!-- <link href="../assets/css/custom.css" rel="stylesheet"> -->
+
+
+</head>
+<body ng-controller="registerController" style="background-color:#000000; position:centre">
+	<div style="color:#FFFFFF; text-align:center; margin-top:5%">
+		<h2>Registering ..</h2>
+	</div>
+	<div class="list list-inset" style="width:100%; height:100%; position:centre; vertical-align:middle; text-align:center; margin-bottom:5%; margin-top:5%">
+		<label class="item item-input item-floating-label hvr-underline-from-left"
+      style="width:100%;">
+        <span class="input-label" style="color:#FFFFFF; margin-right:5%">
+        <i class="icon ion-person"></i> Username </span>
+          <input id="inputField" type="text" placeholder="Username" maxlength="30"
+          ng-model="info.fn" >
+      </label>
+
+      <label class="item item-input item-floating-label hvr-underline-from-left"
+      style="width:100%;">
+        <span class="input-label" style="color:#FFFFFF; margin-right:7%">
+        <i class="icon ion-person"></i> Email </span>
+          <input id="inputField" type="email" placeholder="Email"
+          ng-model="info.fn" >
+      </label>
+
+      <label class="item item-input item-floating-label hvr-underline-from-left" style="width:100%;">
+        <span class="input-label" style="color:#FFFFFF; margin-right:5%">
+        <i class="icon ion-person"></i> Password</span>
+          <input id="inputField" type="password" placeholder="Password" required autocomplete="off"
+          ng-model="info.ln">
+       </label>
+
+       <label class="item item-input item-floating-label hvr-underline-from-left" style="width:100%;">
+        <span class="input-label" style="color:#FFFFFF; margin-right:1%">
+        <i class="icon ion-person"></i> Confirm Password</span>
+          <input id="inputField" type="password" placeholder="Confirm Password" required autocomplete="off">
+       </label>
+	   <button type="button" class="btn" style="width:120px; margin-top: 5%; font-weight:bold"> Register </button>
+	</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<!--
+<head>
+    <meta charset="utf-8">
+    <title>My AngularJS App</title>
+    <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+<ul class="menu">
+    <li><a href="#/view1">view1</a></li>
+</ul>
+
+<div ng-view></div>
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular/angular-resource.js"></script>
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+</body>
+-->
+<head>
+	<title>Client Chat Application</title>
+
+	<!-- Bootstrap Core CSS -->
+  	<link href="css/bootstrap.css" rel="stylesheet">
+   <!-- Custom CSS -->
+    <link href="css/custom.css" rel="stylesheet">
+
+		<!-- requiring externals libraries  -->
+
+		<script src="lib/jquery-2.2.0.min.js"></script>
+		<script src="lib/angular.min.js"></script>
+		<script src="lib/angular-route.min.js"></script>
+		<script src="lib/bootstrap.min.js"></script>
+		<script src="lib/ui-bootstrap-tpls-1.2.5.min.js"></script>
+		<script src="lib/CryptoAlgorithms/aes.js"></script>
+		<script src="lib/CryptoAlgorithms/ClientCrypto.js"></script>
+		<script src="lib/CryptoAlgorithms/hash.js"></script>
+		<script src="lib/CryptoAlgorithms/jsbn.js"></script>
+		<script src="lib/CryptoAlgorithms/random.js"></script>
+		<script src="lib/CryptoAlgorithms/rsa.js"></script>
+		<script src="lib/CryptoAlgorithms/api.js"></script>
+
+		<!-- including core.js that contains angular routes  -->
+		 <script src="js/core.js"></script>
+
+		 <!--include angluar services  -->
+
+
+		 <!--include angular controllers  -->
+		<script src="js/controllers/homeController.js"></script>
+		<script src="js/controllers/clientController.js"></script>
+
+</head>
+<body ng-app="mainApp">
+	<div  class="col-lg-6" ng-controller="ClientController">
+			<h3>Client: <b>{{client1.userName}}</b></h3>
+			<div class="form-group">
+			<label for="InputMessage">Message</label>
+				<div class="input-group">
+				<textarea name="InputMessage" id="InputMessage" class="form-control" rows="5" required ng-model="messageModel"></textarea>
+			</div>
+			 <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right" ng-click="encryptMessage()" >
+		</div>
+
+		<div ng-view></div>
+</body>
+
+</html>

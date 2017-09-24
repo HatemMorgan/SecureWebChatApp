@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Bootstrap Core CSS -->
+  	<!-- <link href="../assets/css/bootstrap.css" rel="stylesheet"> -->
+
+   <!-- Custom CSS -->
+    <!-- <link href="../assets/css/custom.css" rel="stylesheet"> -->
+
+    <!-- requiring externals libraries  -->
+
+    <!-- <script src="../lib/jquery-2.2.0.min.js"></script>
+    <script src="../lib/angular.min.js"></script>
+    <script src="../lib/angular-route.min.js"></script>
+    <script src="../lib/bootstrap.min.js"></script>
+    <script src="../lib/ui-bootstrap-tpls-1.2.5.min.js"></script>
+    <script src="../lib/CryptoAlgorithms/aes.js"></script>
+    <script src="../lib/CryptoAlgorithms/ClientCrypto.js"></script>
+    <script src="../lib/CryptoAlgorithms/hash.js"></script>
+    <script src="../lib/CryptoAlgorithms/jsbn.js"></script>
+    <script src="../lib/CryptoAlgorithms/random.js"></script>
+    <script src="../lib/CryptoAlgorithms/rsa.js"></script>
+    <script src="../lib/CryptoAlgorithms/api.js"></script> -->
+
+    <!-- including core.js that contains angular routes  -->
+     <!-- <script src="../js/core.js"></script>
+     <script src="../js/controllers/loginController.js"></script> -->
+
+</head>
+<body ng-app="mainApp" ng-controller="loginController" style="background-color:#000000; position:centre">
+	<div style="color:#FFFFFF; text-align:center; margin-top:5%">
+		<h2>Logging in ..</h2>
+	</div>
+	<div class="list list-inset" style="width:100%; height:100%; position:centre; vertical-align:middle; text-align:center; margin-bottom:5%; margin-top:5%">
+		<label class="item item-input item-floating-label hvr-underline-from-left"
+      style="width:100%;">
+        <span class="input-label" style="color:#FFFFFF">
+        <i class="icon ion-person"></i> Username </span>
+          <input id="username" type="text" placeholder="Username" maxlength="30" ng-model="login.username">
+      </label>
+
+       <label class="item item-input item-floating-label hvr-underline-from-left" style="width:100%;">
+        <span class="input-label" style="color:#FFFFFF">
+        <i class="icon ion-person"></i> Password</span>
+          <input id="inputField" type="password" placeholder="Password" required autocomplete="off"
+          ng-model="login.password">
+       </label>
+	   <button type="button" class="btn" style="width:120px; margin-top: 5%; font-weight:bold" ng-click="login()"> Login </button>
+	</div>
+
+  <!-- <form role="form" ng-submit="controller.login()">
+      <div class="form-group">
+          <label for="username">Username:</label> <input type="text"
+              class="form-control" id="username" name="username" ng-model="controller.credentials.username"/>
+      </div>
+      <div class="form-group">
+          <label for="password">Password:</label> <input type="password"
+              class="form-control" id="password" name="password" ng-model="controller.credentials.password"/>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form> -->
+
+</body>
+</html>
