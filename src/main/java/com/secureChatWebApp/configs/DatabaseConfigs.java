@@ -17,10 +17,7 @@ import org.springframework.stereotype.Component;
 
 //Load to Environment.
 @Component
-public class DatabaseConnection {
-
-	@Autowired
-	private Environment env;
+public class DatabaseConfigs {
 
 	@Bean(name = "dataSource")
 	public DataSource getDataSource() throws IOException {
@@ -28,10 +25,10 @@ public class DatabaseConnection {
 		properties.load(this.getClass().getResourceAsStream("/jdbc.properties"));
 
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(env.getProperty("jdbc.mysql.database-driver"));
-		dataSource.setUrl(env.getProperty("jdbc.mysql.url"));
-		dataSource.setUsername(env.getProperty("jdbc.mysql.userName"));
-		dataSource.setPassword(env.getProperty("jdbcmysql..password"));
+		dataSource.setDriverClassName(properties.getProperty("jdbc.mysql.database-driver"));
+		dataSource.setUrl(properties.getProperty("jdbc.mysql.url"));
+		dataSource.setUsername(properties.getProperty("jdbc.mysql.userName"));
+		dataSource.setPassword(properties.getProperty("jdbcmysql..password"));
 
 		System.out.println("## getDataSource: " + dataSource);
 
