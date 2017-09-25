@@ -1,4 +1,4 @@
-package com.secureChatWebApp.configs;
+package com.secureChatWebApp.models;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,12 +24,12 @@ import java.util.Properties;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SecurityConfigs {
+public class ServerKeyPairs {
 
 	private KeyPair encryptionKeyPair;
 	private KeyPair signatureKeyPair;
 
-	public SecurityConfigs() throws NoSuchAlgorithmException {
+	public ServerKeyPairs() throws NoSuchAlgorithmException {
 		System.out.println("Security Configs Intialized");
 		init();
 	}
@@ -48,11 +48,11 @@ public class SecurityConfigs {
 				readKeys();
 				//
 			} catch (IOException | InvalidKeySpecException ex) {
-				// IOException or InvalidKeySpecException thrown 
-				//then generate new keys and write them
+				// IOException or InvalidKeySpecException thrown
+				// then generate new keys and write them
 				writeKeys();
 			}
-		}else{
+		} else {
 			// first time to generate keys
 			writeKeys();
 		}
@@ -184,14 +184,4 @@ public class SecurityConfigs {
 
 	}
 
-	public static void main(String[] args) throws NoSuchAlgorithmException {
-		SecurityConfigs securityConfigs = new SecurityConfigs();
-		System.out.println(securityConfigs.getEncryptionKeyPair().getPublic());
-		System.out.println(securityConfigs.getEncryptionKeyPair().getPrivate());
-		System.out.println(securityConfigs.getSignatureKeyPair().getPublic());
-		System.out.println(securityConfigs.getSignatureKeyPair().getPrivate());
-
-		
-		
-	}
 }

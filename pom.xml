@@ -8,6 +8,9 @@
 	<name>SecureWebChatApp</name>
 	<description>Secure Web Chat App that provide users with end to end encryption</description>
 
+
+
+
 	<dependencies>
 
 		<!-- javax: XML binding -->
@@ -75,11 +78,40 @@
 			<version>6.0.6</version>
 		</dependency>
 
-		<!-- Unit testing -->
+		<!--Testing Dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.3.5.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>2.4.0</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path-assert</artifactId>
+			<version>2.4.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-servlet_3.0_spec</artifactId>
+			<version>1.0</version>
 			<scope>test</scope>
 		</dependency>
 

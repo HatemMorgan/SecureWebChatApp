@@ -6,7 +6,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.secureChatWebApp.interceptors.LoggingInterceptor;
+import com.secureChatWebApp.interceptors.SecurityInterceptor;
+
 
 @Configuration
 @EnableWebMvc
@@ -15,7 +16,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoggingInterceptor());
+		registry.addInterceptor(new SecurityInterceptor())
+			.addPathPatterns("/**")
+			.excludePathPatterns("/publicKey/**");
 
 	}
 

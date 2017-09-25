@@ -1,4 +1,4 @@
-package com.secureChatWebApp.configs;
+package com.secureChatWebApp.models;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,7 +15,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SecurityConfigsTest {
+import com.secureChatWebApp.models.ServerKeyPairs;
+
+public class ServerKeyPairsTest {
 
 	/**
 	 * Test that the keys parameters are generated, stored and retrieved
@@ -26,15 +28,15 @@ public class SecurityConfigsTest {
 	@Test
 	public void testSecuirtyConfigsOperations() throws NoSuchAlgorithmException {
 		// Generate and store keys for the first time
-		SecurityConfigs securityConfigs1 = new SecurityConfigs();
-		KeyPair encryptionKeyPair1 = securityConfigs1.getEncryptionKeyPair();
-		KeyPair signatureKeyPair1 = securityConfigs1.getSignatureKeyPair();
+		ServerKeyPairs serverKeyPairs1 = new ServerKeyPairs();
+		KeyPair encryptionKeyPair1 = serverKeyPairs1.getEncryptionKeyPair();
+		KeyPair signatureKeyPair1 = serverKeyPairs1.getSignatureKeyPair();
 
-		// Initialize a new SecurityConfigs to test that it will only read
+		// Initialize a new serverKeyPairs to test that it will only read
 		// previously generated keys
-		SecurityConfigs securityConfigs2 = new SecurityConfigs();
-		KeyPair encryptionKeyPair2 = securityConfigs2.getEncryptionKeyPair();
-		KeyPair signatureKeyPair2 = securityConfigs2.getSignatureKeyPair();
+		ServerKeyPairs serverKeyPairs2 = new ServerKeyPairs();
+		KeyPair encryptionKeyPair2 = serverKeyPairs2.getEncryptionKeyPair();
+		KeyPair signatureKeyPair2 = serverKeyPairs2.getSignatureKeyPair();
 
 		assertEquals("Wrong loaded encryption public key modulas parameter",
 				((RSAPublicKey) encryptionKeyPair1.getPublic()).getModulus(),
@@ -70,7 +72,7 @@ public class SecurityConfigsTest {
 	}
 
 	@After
-	public void finish() throws IOException {
+	public void tearDown() throws IOException {
 		String userHomeDir = System.getProperty("user.home");
 		Path path = Paths.get(userHomeDir, ".serverKeys.properties");
 		Files.delete(path);
