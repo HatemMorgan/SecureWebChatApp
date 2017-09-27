@@ -64,4 +64,12 @@ cryptico.setPublicKey(RSASignKeys,n2,e2);
 var signature = "FV/m1nHtL6kC3qPBYqqGazLB/vAgJCuhyvXdenxf99ukxVp/aW7HgmTsRQG64VOjwHPF8IOLeDhNIb0sHfCf0A==";
 cryptico.verify("Hatem",signature,RSASignKeys);
 
+var utcSeconds = 1234567890;
+var d = new Date(); // The 0 there is the key, which sets the date to the epoch
+var utc = d.toUTCString();
+var epoch = d.getTime();
+console.log(epoch);
+
+var hash = cryptico.sha256("1234");
+console.log(hash);
 });

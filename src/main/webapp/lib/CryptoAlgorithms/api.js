@@ -345,7 +345,9 @@ var cryptico = (function() {
         rsaKey.setPublic(N, E);
     }
 
-
+    my.sha256 = function(plainText){
+      return sha256.hex(plainText).toLowerCase();
+    }
 
     // Inputs: ciphertext and RSA object (key)
     my.decrypt = function(ciphertext, key)

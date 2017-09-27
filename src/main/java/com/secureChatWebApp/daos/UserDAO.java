@@ -2,20 +2,20 @@ package com.secureChatWebApp.daos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.secureChatWebApp.mapper.UserMapper;
 import com.secureChatWebApp.models.User;
 
+@Repository()
 public class UserDAO extends JdbcDaoSupport {
 
 	@Autowired
@@ -33,13 +33,6 @@ public class UserDAO extends JdbcDaoSupport {
 			// System.out.println("UserName exist before");
 			return 0;
 		}
-	}
-
-	public User getUserPublicKeys(String userName) {
-		String SQL = "select user_name,rsa_pub_key_enc,rsa_pub_key_sign from users where user_name = ?";
-
-		User user = this.getJdbcTemplate().queryForObject(SQL, new Object[] { userName }, new UserMapper());
-		return user;
 	}
 
 	public int authenticateUser(String userName, String hashedPassword) {
@@ -66,7 +59,7 @@ public class UserDAO extends JdbcDaoSupport {
 				users = this.getJdbcTemplate().queryForList(SQL, new Object[] { limit }, String.class);
 			} else {
 				String SQL = "select user_name from users order by user_name LIMIT ? OFFSET ?";
-				users = this.getJdbcTemplate().queryForList(SQL, new Object[] { limit, offset  }, String.class);
+				users = this.getJdbcTemplate().queryForList(SQL, new Object[] { limit, offset }, String.class);
 
 			}
 		}
@@ -77,5 +70,10 @@ public class UserDAO extends JdbcDaoSupport {
 		String SQL = "DELETE FROM users WHERE user_name= ?";
 		int deleted = this.getJdbcTemplate().update(SQL, new Object[] { userName });
 		return deleted;
+	}
+
+	public User getUser(String userName) {
+		String SQL = "Select * from users where user_name=?";
+		return this.getJdbcTemplate().queryForObject(SQL, new Object[] { userName }, new UserMapper());
 	}
 }

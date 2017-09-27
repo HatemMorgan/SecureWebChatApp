@@ -1,5 +1,6 @@
 package com.secureChatWebApp.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -14,9 +15,12 @@ import com.secureChatWebApp.interceptors.SecurityInterceptor;
 @ComponentScan(basePackages = "com.secureChatWebApp")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
+	@Autowired
+	SecurityInterceptor securityInterceptor;
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new SecurityInterceptor())
+		registry.addInterceptor(securityInterceptor)
 			.addPathPatterns("/**")
 			.excludePathPatterns("/publicKey/**");
 

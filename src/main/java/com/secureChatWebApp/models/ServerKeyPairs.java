@@ -8,20 +8,18 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.KeyFactory;
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPrivateKeySpec;
-import java.security.spec.RSAPublicKeySpec;
 import java.util.Properties;
 
 import org.springframework.stereotype.Component;
+
+import com.secureChatWebApp.utilites.RSAUtility;
 
 @Component
 public class ServerKeyPairs {
@@ -48,6 +46,7 @@ public class ServerKeyPairs {
 				readKeys();
 				//
 			} catch (IOException | InvalidKeySpecException ex) {
+				System.out.println(ex.getMessage());
 				// IOException or InvalidKeySpecException thrown
 				// then generate new keys and write them
 				writeKeys();
@@ -58,27 +57,10 @@ public class ServerKeyPairs {
 		}
 	}
 
-	/**
-	 * KeyPairGenerator class can be used to generate pairs of private and
-	 * public keys specific to a certain public-key algorithm.
-	 * 
-	 * RSA keys must be at least 512 bits long and It can reach a key of 8192
-	 * bits but it will take long time up to 3 minutes
-	 * 
-	 * @return
-	 * @throws NoSuchAlgorithmException
-	 */
-	private KeyPair generatetKeyPair() throws NoSuchAlgorithmException {
-		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-		kpg.initialize(512);
-		KeyPair keyPair = kpg.generateKeyPair();
-		return keyPair;
-	}
-
 	private boolean writeKeys() throws NoSuchAlgorithmException {
 
-		encryptionKeyPair = generatetKeyPair();
-		signatureKeyPair = generatetKeyPair();
+		encryptionKeyPair = RSAUtility.generatetKeyPair();
+		signatureKeyPair = RSAUtility.generatetKeyPair();
 
 		// set properties of encryption key pairs
 		RSAPublicKey pubKey = (RSAPublicKey) encryptionKeyPair.getPublic();
@@ -155,11 +137,8 @@ public class ServerKeyPairs {
 			BigInteger prvKeyModulas = new BigInteger(properties.getProperty("encryption.prv.modulas"));
 			BigInteger prvKeyExponent = new BigInteger(properties.getProperty("encryption.prv.exponent"));
 
-			RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(pubKeyModulas, pubKeyExponent);
-			RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(prvKeyModulas, prvKeyExponent);
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-			PrivateKey prvKey = keyFactory.generatePrivate(rsaPrivateKeySpec);
-			PublicKey pubKey = keyFactory.generatePublic(rsaPublicKeySpec);
+			PrivateKey prvKey = RSAUtility.reConstructPrivateKey(prvKeyModulas, prvKeyExponent);
+			PublicKey pubKey = RSAUtility.reConstructPublicKey(pubKeyModulas, pubKeyExponent);
 			encryptionKeyPair = new KeyPair(pubKey, prvKey);
 
 			// getting Signature Key Pair
@@ -168,10 +147,8 @@ public class ServerKeyPairs {
 			prvKeyModulas = new BigInteger(properties.getProperty("signature.prv.modulas"));
 			prvKeyExponent = new BigInteger(properties.getProperty("signature.prv.exponent"));
 
-			rsaPublicKeySpec = new RSAPublicKeySpec(pubKeyModulas, pubKeyExponent);
-			rsaPrivateKeySpec = new RSAPrivateKeySpec(prvKeyModulas, prvKeyExponent);
-			prvKey = keyFactory.generatePrivate(rsaPrivateKeySpec);
-			pubKey = keyFactory.generatePublic(rsaPublicKeySpec);
+			prvKey = RSAUtility.reConstructPrivateKey(prvKeyModulas, prvKeyExponent);
+			pubKey = RSAUtility.reConstructPublicKey(pubKeyModulas, pubKeyExponent);
 			signatureKeyPair = new KeyPair(pubKey, prvKey);
 
 		} catch (FileNotFoundException e) {

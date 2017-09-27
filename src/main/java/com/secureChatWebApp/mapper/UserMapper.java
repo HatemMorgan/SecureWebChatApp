@@ -13,6 +13,7 @@ public class UserMapper implements  RowMapper<User> {
 			User user = new User();
 			
 			user.setUserName(rs.getString("user_name"));
+			user.setPassword(rs.getString("password"));
 			user.setRsaPubKeyEnc(rs.getString("rsa_pub_key_enc"));
 			user.setRsaPubKeySign(rs.getString("rsa_pub_key_sign"));
 			
