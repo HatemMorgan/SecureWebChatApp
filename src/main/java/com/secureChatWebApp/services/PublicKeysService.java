@@ -1,4 +1,4 @@
-package com.secureChatWebApp.controllers;
+package com.secureChatWebApp.services;
 
 import java.security.interfaces.RSAPublicKey;
 

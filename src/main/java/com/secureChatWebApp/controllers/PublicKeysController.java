@@ -1,4 +1,4 @@
-package com.secureChatWebApp.services;
+package com.secureChatWebApp.controllers;
 
 import java.util.LinkedHashMap;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.secureChatWebApp.controllers.PublicKeysService;
+import com.secureChatWebApp.services.PublicKeysService;
 
 @RestController
 @RequestMapping("publicKey")
