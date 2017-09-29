@@ -108,6 +108,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 		// in order to allow handlers to take actions
 		request.setAttribute("isAuthenticated", isAuthenticated);
 		request.setAttribute("isValidUser", isValidUser);
+		request.setAttribute("userName", userName);
 		return true;
 	}
 	

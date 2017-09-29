@@ -23,7 +23,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addInterceptor(securityInterceptor)
 			.addPathPatterns("/**")
 			.excludePathPatterns("/publicKey/**")
-			.excludePathPatterns("/register/**");
+			.excludePathPatterns("/register/**")
+			.excludePathPatterns("/dbdump");
 		
 
 	}

@@ -9,6 +9,8 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.secureChatWebApp.exceptions.DatabaseException;
+
 public class ChatDAOTest {
 
 	ChatDAO chatDAO;
@@ -30,7 +32,7 @@ public class ChatDAOTest {
 	}
 
 	@Test
-	public void testCreation() {
+	public void testCreation() throws DatabaseException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -54,8 +56,20 @@ public class ChatDAOTest {
 		userDAO.deleteUser("test2");
 	}
 
+	@Test(expected = DatabaseException.class)
+	public void testCreateUserWithInvalidReceiver() throws DatabaseException {
+		userDAO.createUser("test1", "2123ejdq124fa32",
+				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
+				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
+
+		chatDAO.create("test1", "test",
+				"iNUTHr3Tuu1HS8ihTbLdj5WMIx4URGjXYUB5cMSnJ3tAPEEEW9DpAjAMbemBsFTfq1xz/QbZEn/ddMLSycTofQ==");
+
+		userDAO.deleteUser("test1");
+	}
+
 	@Test
-	public void testDeleteChat() {
+	public void testDeleteChat() throws DatabaseException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -79,7 +93,7 @@ public class ChatDAOTest {
 	}
 
 	@Test
-	public void testGetEncryptedChatKey() {
+	public void testGetEncryptedChatKey() throws DatabaseException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");

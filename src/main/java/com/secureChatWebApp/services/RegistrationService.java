@@ -27,7 +27,7 @@ public class RegistrationService {
 	@Autowired
 	ServerKeyPairs serverKeyPairs;
 
-	public boolean register(String requestBody)
+	public void register(String requestBody)
 			throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException,
 			BadPaddingException, SignatureException, InvalidKeySpecException, RequestException {
 
@@ -68,7 +68,13 @@ public class RegistrationService {
 
 				} else {
 
-					return registerNewUser(s);
+					boolean registered = registerNewUser(s);
+
+					// user was not inserted into database
+					if (!registered)
+						throw new RequestException(
+								"Cannot insert new user. Please report this problem and try registering again");
+
 				}
 			}
 

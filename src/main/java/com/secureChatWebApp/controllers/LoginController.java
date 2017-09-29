@@ -36,7 +36,7 @@ public class LoginController {
 			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 			responseJSON.put("domain", "Login");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
-			responseJSON.put("timeTaken", timeTaken + "");
+			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.BAD_REQUEST);
 		}
 
@@ -47,7 +47,7 @@ public class LoginController {
 			responseJSON.put("domain", "Login");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
-			responseJSON.put("timeTaken", timeTaken + "");
+			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.UNAUTHORIZED);
 		}
 
@@ -56,7 +56,7 @@ public class LoginController {
 		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 		responseJSON.put("domain", "Login");
 		responseJSON.put("message", "User logged in successfully");
-		responseJSON.put("timeTaken", timeTaken + "");
+		responseJSON.put("timeTaken", timeTaken + " seconds");
 		return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.OK);
 
 	}

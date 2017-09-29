@@ -22,9 +22,8 @@ public class ContactsController {
 	@Autowired
 	ContactsService contactsService;
 
-	@RequestMapping(value = { "/{userName}/{offset}/{limit}", "/{userName}/{limit}",
-			"/{userName}" }, method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<LinkedHashMap<String, Object>> getContacts(@PathVariable(value = "userName") String userName,
+	@RequestMapping(value = { "/{offset}/{limit}","/{limit}","" }, method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<LinkedHashMap<String, Object>> getContacts(
 			@PathVariable(value = "offset") Optional<Integer> optionalOffset,
 			@PathVariable(value = "limit") Optional<Integer> optionalLimit, HttpServletRequest request)
 			throws Exception {
@@ -45,6 +44,9 @@ public class ContactsController {
 		// get startTime added by Security intercepter
 		long startTime = (long) request.getAttribute("startTime");
 
+		// get userName from added by Security intercepter from access token
+		String userName = (String) request.getAttribute("userName");
+		
 		// response JSON
 		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<>();
 
@@ -54,7 +56,7 @@ public class ContactsController {
 			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 			responseJSON.put("domain", "Contacts");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
-			responseJSON.put("timeTaken", timeTaken + "");
+			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.BAD_REQUEST);
 		}
 
@@ -65,7 +67,7 @@ public class ContactsController {
 			responseJSON.put("domain", "Contacts");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
-			responseJSON.put("timeTaken", timeTaken + "");
+			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.UNAUTHORIZED);
 		}
 
@@ -73,7 +75,7 @@ public class ContactsController {
 		// response
 		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 		responseJSON.put("domain", "Contacts");
-		responseJSON.put("timeTaken", timeTaken + "");
+		responseJSON.put("timeTaken", timeTaken + " seconds");
 		responseJSON.putAll(contactsService.getContacts(userName, offset, limit));
 		return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.OK);
 
@@ -101,7 +103,7 @@ public class ContactsController {
 			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 			responseJSON.put("domain", "Contacts");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
-			responseJSON.put("timeTaken", timeTaken + "");
+			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.BAD_REQUEST);
 		}
 
@@ -112,7 +114,7 @@ public class ContactsController {
 			responseJSON.put("domain", "Contacts");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
-			responseJSON.put("timeTaken", timeTaken + "");
+			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.UNAUTHORIZED);
 		}
 
@@ -120,7 +122,7 @@ public class ContactsController {
 		// send success response
 		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 		responseJSON.put("domain", "Contacts");
-		responseJSON.put("timeTaken", timeTaken + "");
+		responseJSON.put("timeTaken", timeTaken + " seconds");
 		responseJSON.putAll(contactsService.getContactPubKeys(contactName));
 		return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.OK);
 

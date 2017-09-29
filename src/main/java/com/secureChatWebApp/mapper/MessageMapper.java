@@ -22,6 +22,8 @@ public class MessageMapper implements RowMapper<Message> {
 		boolean isSent = rs.getInt("sent") == 1 ? true : false ;
 		message.setSent(isSent);
 		
+		message.setTimestamp(rs.getTimestamp("timeStamp"));
+		
 		return message;
 	}
 

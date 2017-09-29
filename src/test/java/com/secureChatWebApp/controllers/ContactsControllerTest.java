@@ -76,7 +76,7 @@ public class ContactsControllerTest {
 	public void testGettingContacts() throws Exception {
 		String accessToken = generateAccessToken();
 
-		String url = "/contacts/" + registeredUser.getUserName();
+		String url = "/contacts";
 		// create request and send it to get contacts
 		MvcResult response = mockMvc.perform(get(url).header("x-access-token", accessToken)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.domain", is("Contacts"))).andReturn();
@@ -117,7 +117,7 @@ public class ContactsControllerTest {
 	public void testGettingContactsWithLimits() throws Exception {
 		String accessToken = generateAccessToken();
 
-		String url = "/contacts/" + registeredUser.getUserName() + "/2";
+		String url = "/contacts/2";
 		// create request and send it to get contacts
 		MvcResult response = mockMvc.perform(get(url).header("x-access-token", accessToken)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.domain", is("Contacts"))).andReturn();
@@ -160,7 +160,7 @@ public class ContactsControllerTest {
 	public void testGettingContactsWithLimitAndOffset() throws Exception {
 		String accessToken = generateAccessToken();
 
-		String url = "/contacts/" + registeredUser.getUserName() + "/1/2";
+		String url = "/contacts/1/2";
 		// create request and send it to get contacts
 		MvcResult response = mockMvc.perform(get(url).header("x-access-token", accessToken)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.domain", is("Contacts"))).andReturn();
@@ -332,7 +332,6 @@ public class ContactsControllerTest {
 				.andExpect(jsonPath("$.domain", is("Registeration")))
 				.andExpect(jsonPath("$.message", is("User registered successfully")));
 
-		// check that user was inserted in database
 		registeredUser = userDAO.getUser("test123");
 		signPrvKey = rsaSignKeyPair.getPrivate();
 		String[] serverSignPubKeyStr = map.get("signaturePubKey").split(":");

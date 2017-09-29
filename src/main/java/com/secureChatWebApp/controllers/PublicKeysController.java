@@ -24,26 +24,40 @@ public class PublicKeysController {
 
 	@RequestMapping(value = "/encryption", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<LinkedHashMap<String, String>> getEncryptionPublicKey() {
+		long startTime = System.currentTimeMillis();
+
 		LinkedHashMap<String, String> json = new LinkedHashMap<>();
 		json.put("encryptionPubKey", publicKeysService.getEncryptionPublicKey());
 
+		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		json.put("timeTaken", timeTaken + " seconds");
+
 		return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/signature", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<LinkedHashMap<String, String>> getSignaturePublicKey() {
+		long startTime = System.currentTimeMillis();
+
 		LinkedHashMap<String, String> json = new LinkedHashMap<>();
 		json.put("signaturePubKey", publicKeysService.getSignaturePublicKey());
 
+		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		json.put("timeTaken", timeTaken + " seconds");
+
 		return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.OK);
 	}
-	
-	
+
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<LinkedHashMap<String, String>> getServerPublicKey() {
+		long startTime = System.currentTimeMillis();
+
 		LinkedHashMap<String, String> json = new LinkedHashMap<>();
 		json.put("encryptionPubKey", publicKeysService.getEncryptionPublicKey());
 		json.put("signaturePubKey", publicKeysService.getSignaturePublicKey());
+
+		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		json.put("timeTaken", timeTaken + " seconds");
 
 		return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.OK);
 	}

@@ -1,16 +1,21 @@
 package com.secureChatWebApp.daos;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Component;
 
+import com.secureChatWebApp.exceptions.DatabaseException;
 import com.secureChatWebApp.mapper.MessageMapper;
 import com.secureChatWebApp.models.Message;
 
+@Component
 public class MessageDAO extends JdbcDaoSupport {
 
 	@Autowired
@@ -19,40 +24,64 @@ public class MessageDAO extends JdbcDaoSupport {
 	}
 
 	public int createMessage(String sender, String receiver, String text) {
-		String SQL = "insert into messages(sender,receiver,text,sent) "
-				+ "values(?,?,?,1)";
-		try {
-			int inserted = this.getJdbcTemplate().update(SQL, new Object[] { sender, receiver, text });
-			return inserted;
-		} catch (DuplicateKeyException e) {
-			System.out.println(e.getMessage());
-			return 0;
-		}
+		String SQL = "insert into messages(sender,receiver,text,sent,timeStamp) " + "values(?,?,?,1,?)";
+		int inserted = this.getJdbcTemplate().update(SQL,
+				new Object[] { sender, receiver, text, new Timestamp(new Date().getTime()) });
+		return inserted;
 	}
 
-	public List<Message> dumpMessages() {
+	public List<Message> dumpMessages() throws DatabaseException {
 		String SQL = "select * from messages order by id LIMIT 50";
-		List<Message> messages = this.getJdbcTemplate().query(SQL, new MessageMapper());
 
-		return messages;
+		try {
+			List<Message> messages = this.getJdbcTemplate().query(SQL, new MessageMapper());
+			return messages;
+		} catch (EmptyResultDataAccessException ex) {
+			throw new DatabaseException("No messages added yet");
+		}
+
 	}
 
-	public List<Message> getOldMessages(String sender, String receiver, int offset, int limit) {
-		String SQL = "select * from messages where (sender=? and receiver=?) or (receiver=? and sender=?)"
-				+ "order by id LIMIT ? OFFSET ?";
-		List<Message> messages = this.getJdbcTemplate().query(SQL,
-				new Object[] { sender, receiver, sender, receiver, limit,offset  }, new MessageMapper());
+	public List<Message> getOldMessages(String sender, String receiver, int offset, int limit)
+			throws DatabaseException {
 
+		List<Message> messages = null;
+
+		try {
+			// default limit 10
+			if (limit == -1) {
+				String SQL = "select * from messages where (sender=? and receiver=?) or (receiver=? and sender=?)"
+						+ "order by timeStamp DESC LIMIT 10";
+				messages = this.getJdbcTemplate().query(SQL, new Object[] { sender, receiver, sender, receiver },
+						new MessageMapper());
+			} else {
+				if (offset == -1) {
+					String SQL = "select * from messages where (sender=? and receiver=?) or (receiver=? and sender=?)"
+							+ "order by timeStamp DESC LIMIT ?";
+					messages = this.getJdbcTemplate().query(SQL,
+							new Object[] { sender, receiver, sender, receiver, limit }, new MessageMapper());
+				} else {
+					String SQL = "select * from messages where (sender=? and receiver=?) or (receiver=? and sender=?)"
+							+ "order by timeStamp DESC LIMIT ? OFFSET ?";
+					messages = this.getJdbcTemplate().query(SQL,
+							new Object[] { sender, receiver, sender, receiver, limit, offset }, new MessageMapper());
+
+				}
+			}
+		} catch (EmptyResultDataAccessException ex) {
+			throw new DatabaseException("No messages added yet");
+		}
 		return messages;
+
 	}
 
 	public int deleteMessage(String sender, String receiver) {
 		String SQL = "DELETE FROM messages WHERE  (sender=? and receiver=?) or (receiver=? and sender=?) ";
-		int deleted = this.getJdbcTemplate().update(SQL, new Object[] { sender, receiver,sender,receiver});
-		
+		int deleted = this.getJdbcTemplate().update(SQL, new Object[] { sender, receiver, sender, receiver });
+
 		String SQL2 = "ALTER TABLE messages AUTO_INCREMENT=1;";
 		this.getJdbcTemplate().update(SQL2);
-	
+
 		return deleted;
 	}
 

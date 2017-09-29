@@ -298,6 +298,7 @@ var cryptico = (function() {
     {
         var cipherblock = "";
         var aeskey = my.generateAESKey();
+        console.log("AES key: "+aeskey);
       try
         {
             var publickey = my.publicKeyFromString(publickeystring);

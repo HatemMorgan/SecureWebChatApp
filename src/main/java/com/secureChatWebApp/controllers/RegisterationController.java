@@ -26,23 +26,16 @@ public class RegisterationController {
 		long startTime = System.currentTimeMillis();
 		LinkedHashMap<String, String> json = new LinkedHashMap<>();
 		try {
-			boolean registered = registrationService.register(requestBody.get("data"));
-			// check if user was inserted successfully to database
-			if (registered) {
-				double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
-				json.put("domain", "Registeration");
-				json.put("message", "User registered successfully");
-				json.put("timeTaken", timeTaken + "");
-				return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.OK);
 
-			} else {
+			registrationService.register(requestBody.get("data"));
 
-				// user was not inserted into database
-				throw new RequestException(
-						"Cannot insert new user. Please report this problem and try registering again");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			json.put("domain", "Registeration");
+			json.put("message", "User registered successfully");
+			json.put("timeTaken", timeTaken + " seconds");
+			return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.OK);
+
+		} catch (RequestException e) {
 			/*
 			 * RequestException(custom exception) thrown if request validation
 			 * failed or request body was corrupted
@@ -50,8 +43,17 @@ public class RegisterationController {
 			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 			json.put("domain", "Registeration");
 			json.put("errMessage", e.getMessage());
-			json.put("timeTaken", timeTaken + "");
+			json.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.BAD_REQUEST);
+		} catch (Exception ex) {
+
+			// other exceptions not handled by service thrown and send
+			// INTERNAL_SERVER_ERROR status code (500)
+			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			json.put("domain", "Registeration");
+			json.put("errMessage", ex.getMessage());
+			json.put("timeTaken", timeTaken + " seconds");
+			return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

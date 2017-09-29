@@ -10,6 +10,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.secureChatWebApp.exceptions.DatabaseException;
 import com.secureChatWebApp.models.Message;
 
 public class MessageDAOTest {
@@ -54,7 +55,7 @@ public class MessageDAOTest {
 	}
 
 	@Test
-	public void testDumpMessages() {
+	public void testDumpMessages() throws DatabaseException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -81,7 +82,7 @@ public class MessageDAOTest {
 	
 	
 	@Test
-	public void testGetOldMessages(){
+	public void testGetOldMessages() throws DatabaseException, InterruptedException{
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -91,18 +92,22 @@ public class MessageDAOTest {
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
 		messageDAO.createMessage("test1", "test2", "PTKZ7aGJ74EAmHGwTW0+EiT22LVQtscoRk7rxVfMNVk=");
+		Thread.sleep(1000);
 		messageDAO.createMessage("test1", "test2", "PTKZ7aGJ74EAmHGwTW0+EiT22LVQtscoRk7rxVfMNVk=");
+		Thread.sleep(1000);
 		messageDAO.createMessage("test1", "test2", "PTKZ7aGJ74EAmHGwTW0+EiT22LVQtscoRk7rxVfMNVk=");
+		Thread.sleep(1000);
 		messageDAO.createMessage("test1", "test2", "PTKZasdEAasdaGwTW0+EiT22LVQscoRk7rxVasdadsk=");
+		Thread.sleep(1000);
 		messageDAO.createMessage("test2", "test1", "PTKZasdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=");
+		Thread.sleep(1000);
 		messageDAO.createMessage("test2", "test1", "asdadsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=");
 
 		List<Message> oldMessages = messageDAO.getOldMessages("test1","test2",2, 4);
-		
-		assertEquals("Failure,Wrong Message fetched", "PTKZ7aGJ74EAmHGwTW0+EiT22LVQtscoRk7rxVfMNVk=", oldMessages.get(0).getText());
-		assertEquals("Failure,Wrong Message fetched", "PTKZasdEAasdaGwTW0+EiT22LVQscoRk7rxVasdadsk=", oldMessages.get(1).getText());
-		assertEquals("Failure,Wrong Message fetched", "PTKZasdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=", oldMessages.get(2).getText());
-		assertEquals("Failure,Wrong Message fetched", "asdadsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=", oldMessages.get(3).getText());
+		assertEquals("Failure,Wrong Message fetched", "PTKZasdEAasdaGwTW0+EiT22LVQscoRk7rxVasdadsk=", oldMessages.get(0).getText());
+		assertEquals("Failure,Wrong Message fetched", "PTKZ7aGJ74EAmHGwTW0+EiT22LVQtscoRk7rxVfMNVk=", oldMessages.get(1).getText());
+		assertEquals("Failure,Wrong Message fetched", "PTKZ7aGJ74EAmHGwTW0+EiT22LVQtscoRk7rxVfMNVk=", oldMessages.get(2).getText());
+		assertEquals("Failure,Wrong Message fetched", "PTKZ7aGJ74EAmHGwTW0+EiT22LVQtscoRk7rxVfMNVk=", oldMessages.get(3).getText());
 		
 
 		messageDAO.deleteMessage("test1", "test2");
