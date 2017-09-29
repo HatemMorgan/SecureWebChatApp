@@ -39,9 +39,6 @@ public class RSAUtility {
 			IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
 		Cipher cipher = Cipher.getInstance("RSA");
 
-		System.out.println(cipher.getProvider() + "  " + cipher.getAlgorithm() + "  " + cipher.getBlockSize() + "  "
-				+ cipher.getParameters());
-
 		cipher.init(Cipher.ENCRYPT_MODE, pubKey);
 		byte[] cipherText = cipher.doFinal(plainText.getBytes());
 		return new String(Base64.getEncoder().encode(cipherText));
@@ -66,9 +63,6 @@ public class RSAUtility {
 			NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 
 		Cipher cipher = Cipher.getInstance("RSA");
-
-		System.out.println(cipher.getProvider() + "  " + cipher.getAlgorithm() + "  " + cipher.getBlockSize() + "  "
-				+ cipher.getParameters());
 
 		cipher.init(Cipher.DECRYPT_MODE, privKey);
 		byte[] decryptedPlainText = cipher.doFinal(Base64.getDecoder().decode(cipherText));
@@ -134,6 +128,28 @@ public class RSAUtility {
 		RSAPrivateKeySpec spec = new RSAPrivateKeySpec(modulus, exponent);
 		KeyFactory factory = KeyFactory.getInstance("RSA");
 		return factory.generatePrivate(spec);
+	}
+
+	/**
+	 * Check that public key passed by a client is a valid one.
+	 * 
+	 * if InvalidKeySpecException is thrown it means that the params of public
+	 * key is invalid
+	 * 
+	 * @param pubKeyStr
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 */
+	public static boolean checkIfPublicKeyValid(String pubKeyStr) throws NoSuchAlgorithmException {
+		String[] params = pubKeyStr.split(":");
+
+		try {
+			reConstructPublicKey(new BigInteger(params[0]), new BigInteger(params[1]));
+			return true;
+
+		} catch (InvalidKeySpecException e) {
+			return false;
+		}
 	}
 
 }

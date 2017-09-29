@@ -111,7 +111,7 @@ public class ServerKeyPairs {
 	private boolean wasKeysGenerated() {
 		String userHome = System.getProperty("user.home");
 		Path path = Paths.get(userHome, ".serverKeys.properties");
-
+		System.out.println(Files.exists(path));
 		return Files.exists(path);
 	}
 

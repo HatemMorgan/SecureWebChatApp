@@ -95,7 +95,6 @@ function RSASetPublic(N, E)
     {
         this.n = parseBigInt(N, 16);
         this.e = parseInt(E, 16);
-        console.log(this.n);
     }
     else alert("Invalid RSA public key");
 }
@@ -121,6 +120,10 @@ function RSADoPublic(x)
 
 // Return the PKCS#1 RSA encryption of "text" as an even-length hex string
 
+function getPubKey(){
+  var m = pkcs1pad2("text", (this.n.bitLength() + 7) >> 3);
+  return this.n+":"+this.e;
+}
 
 function RSAEncrypt(text)
 {
@@ -142,7 +145,7 @@ function RSAEncrypt(text)
 //}
 // protected
 RSAKey.prototype.doPublic = RSADoPublic;
-
+RSAKey.prototype.getPubKey = getPubKey;
 // public
 RSAKey.prototype.setPublic = RSASetPublic;
 RSAKey.prototype.encrypt = RSAEncrypt;

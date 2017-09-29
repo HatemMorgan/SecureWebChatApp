@@ -28,7 +28,7 @@ public class DatabaseConfigs {
 		dataSource.setDriverClassName(properties.getProperty("jdbc.mysql.database-driver"));
 		dataSource.setUrl(properties.getProperty("jdbc.mysql.url"));
 		dataSource.setUsername(properties.getProperty("jdbc.mysql.userName"));
-		dataSource.setPassword(properties.getProperty("jdbcmysql..password"));
+		dataSource.setPassword(properties.getProperty("jdbc.mysql.password"));
 
 		System.out.println("## getDataSource: " + dataSource);
 

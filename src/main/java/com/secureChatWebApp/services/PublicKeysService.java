@@ -1,5 +1,6 @@
 package com.secureChatWebApp.services;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -32,9 +32,8 @@ public class PublicKeysControllerTest {
 
 
 	private MockMvc mockMvc;
-	 private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-	            MediaType.APPLICATION_JSON.getSubtype(),
-	            Charset.forName("utf8"));
+	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
+			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 	@Autowired
 	private PublicKeysService publicKeysService;
 

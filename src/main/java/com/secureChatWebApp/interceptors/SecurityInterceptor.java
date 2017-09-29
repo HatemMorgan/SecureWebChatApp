@@ -1,15 +1,9 @@
 package com.secureChatWebApp.interceptors;
 
 import java.io.IOException;
-import java.security.Signature;
-import java.security.SignatureSpi;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.Properties;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
@@ -45,7 +39,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 	/**
 	 * Authenticate Requests by checking that x-acess-token header is valid
 	 * 
-	 * x-acess-token = {userName}:{date}:signature
+	 * x-access-token = {userName}:{date}:signature
 	 * 
 	 * signature = sign(prvClient,{HashedPassword}:{date})
 	 * 
@@ -58,8 +52,8 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 	 * if the date is valid and signature is valid then the request is
 	 * authenticated
 	 * 
-	 * there are two boolean variables isAuthenticated and isValidUser which
-	 * are added as attributes to request handler to take an action.
+	 * there are two boolean variables isAuthenticated and isValidUser which are
+	 * added as attributes to request handler to take an action.
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -71,7 +65,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
 		// token = {userName}:{date}:signature
 		// signature = sign(prvClient,{HashedPassword}:{date})
-		String tokenHeader = request.getHeader("x-acess-token");
+		String tokenHeader = request.getHeader("x-access-token");
 
 		String[] token = tokenHeader.split(":");
 		String userName = token[0];

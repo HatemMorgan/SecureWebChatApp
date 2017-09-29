@@ -28,6 +28,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.http.HttpStatus;
@@ -98,7 +99,7 @@ public class UserRestService {
     	System.out.println("---->"+key.getModulus());
     	System.out.println("n = "+  String.format("%040x",key.getModulus()));
     	System.out.println("e = "+  String.format("%040x",key.getPublicExponent()));
-    	
+    	System.out.println(new BigInteger((String.format("%040x",key.getModulus())),16));
     	
     	BigInteger privateExponent = new BigInteger("6969969314326684788757048218075709801652660258043315402751582315321228427561845787301752744834957930045024395213531245448943986747638235659735422026661369");
     	BigInteger privateModulas = new BigInteger("9030878767778967220908457109745315301613459507154559252488690421288771425181993925836332492165958967519196312333408580963015703994605694235068391369987151");
@@ -109,7 +110,14 @@ public class UserRestService {
     	String cipherText = "UVW/lSfZzkB4myYA/1L1QwmrwgB9junnosqfJUanuEuf4bm72YBIxpdetaeDAzo9r2qUdVhKXs++hGgZ0hV9FA==";
     	String plian = decrypt(Base64.getDecoder().decode(cipherText.getBytes()),prvKey);
     	System.out.println(plian);
-    	
+//    	String[] cipherText = new String("MyWo3E7QsZvZaqCKwlb6jqce2aelshhnPeBq3u1yBqnOduJblH+XemRMo2r7UP3gUq8L+/Cl0KyEqOAkM5b74w==:zMjzWoxS6ZnsiOS0QlFmklFirsMKqPl0sB8XWQbGn84=").split(":");
+//    	String aesKey = decrypt(Base64.getDecoder().decode(cipherText[0].getBytes()),prvKey);
+//    	// decode the base64 encoded string
+//    	byte[] decodedKey = Base64.getDecoder().decode(aesKey);
+//    	// rebuild key using SecretKeySpec
+//    	SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES"); 
+//    	    	String plain = aesDecrypt(cipherText[1].getBytes(),originalKey);
+//    	    	System.out.println(plain);
     	System.out.println("------------------------------------------------------------------");
     	
     	// Signatures
@@ -146,6 +154,58 @@ public class UserRestService {
     	
     }    	
 
+    /**
+	 * default block size is 16 byte so the generated IV is also 16 bytes
+	 */
+	public static byte[] aesEncrypt(String plaintext, SecretKey key)
+			throws InvalidAlgorithmParameterException,
+			NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidKeyException, IllegalBlockSizeException,
+			BadPaddingException, IOException {
+
+		Cipher cipher = Cipher.getInstance("AES/CBC");
+
+		System.out.println(cipher.getProvider() + "  " + cipher.getAlgorithm()
+				+ "  " + cipher.getBlockSize() + "  " + cipher.getParameters());
+
+		cipher.init(Cipher.ENCRYPT_MODE, key);
+
+		byte[] iv = cipher.getIV();
+		byte[] byteCipherText = cipher.doFinal(plaintext.getBytes());
+
+		// concatenating IV to byteCipherText to form one cipher text
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		outputStream.write(iv);
+		outputStream.write(byteCipherText);
+
+		byte[] finalData = outputStream.toByteArray();
+
+		return finalData;
+	}
+	
+	public static String aesDecrypt(byte[] byteCipherText, SecretKey key)
+			throws InvalidKeyException, IllegalBlockSizeException,
+			BadPaddingException, UnsupportedEncodingException,
+			NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidAlgorithmParameterException {
+
+		Cipher cipher = Cipher.getInstance("AES/CBC");
+
+		// get IV and cipher text from byteCipherText resulted after
+		// concatenation of encrypted plain text and IV
+		byte[] iv = Arrays.copyOfRange(byteCipherText, 0, 16);
+		byte[] cipherText = Arrays.copyOfRange(byteCipherText, 16,
+				byteCipherText.length);
+
+		IvParameterSpec iv_specs = new IvParameterSpec(iv);
+		cipher.init(Cipher.DECRYPT_MODE, key, iv_specs);
+
+		byte[] plainTextBytes = cipher.doFinal(cipherText);
+		String plainText = new String(plainTextBytes);
+		return plainText;
+	}
+
+    
     public static SecretKey generatetSecretEncryptionKey() throws Exception {
 		KeyGenerator generator = KeyGenerator.getInstance("AES");
 		generator.init(192); // The AES key size in number of bits

@@ -324,6 +324,7 @@ var cryptico = (function() {
     my.RSASign = function(plainText,signKey){
         signString = my.b16to64(signKey.signString(plainText, "sha256"));
         console.log("Signature---> "+signString);
+        return signString;
     }
 
     my.verify = function(plainText,signature,signKey){
@@ -334,6 +335,7 @@ var cryptico = (function() {
     my.RSAEncrypt = function(plainText,rsaObj){
           var cipherblock = my.b16to64(rsaObj.encrypt(plainText));
           console.log("Encrypted ----> "+cipherblock);
+          return cipherblock;
     }
 
     my.RSADecrypt = function(ciphertext,key){
@@ -347,6 +349,16 @@ var cryptico = (function() {
 
     my.sha256 = function(plainText){
       return sha256.hex(plainText).toLowerCase();
+    }
+
+    my.sha1 = function(plainText){
+      return sha1.hex(plainText).toLowerCase();
+    }
+
+    my.getPubKey = function(RSAObj){
+      var rsaPubKeyParamsStr = RSAObj.getPubKey();
+      console.log(rsaPubKeyParamsStr);
+      return rsaPubKeyParamsStr;
     }
 
     // Inputs: ciphertext and RSA object (key)

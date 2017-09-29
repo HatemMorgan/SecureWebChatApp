@@ -14,7 +14,7 @@ app.config(function($routeProvider) {
 	// route for the registeration page
 	$routeProvider.when('/registeration', {
 		templateUrl : 'partials/registerPage.html',
-		controller : 'registerationController'
+		controller : 'registerController'
 	});
 
 	// route for the login page

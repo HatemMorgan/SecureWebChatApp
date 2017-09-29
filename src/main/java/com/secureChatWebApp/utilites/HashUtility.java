@@ -7,14 +7,14 @@ import javax.xml.bind.DatatypeConverter;
 
 public class HashUtility {
 
-	public static String hashSHA256(String plainText) throws NoSuchAlgorithmException {
+	public static String hashSHA1(String plainText) throws NoSuchAlgorithmException {
 		/*
 		 * MessageDigest java Docs :
 		 * 
 		 * https://docs.oracle.com/javase/8/docs/api/java
 		 * /security/MessageDigest.html
 		 */
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		MessageDigest md = MessageDigest.getInstance("SHA1");
 
 		/*
 		 * The data is processed through it using the update method
@@ -32,9 +32,9 @@ public class HashUtility {
 	}
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		System.out.println(hashSHA256("Hatem1995"));
-		System.out.println(new String("b34745c91557ddf3db99f3d283f81d2bf534643ef2e889c4e2ec97380fe3c77b")
-				.equals(hashSHA256("Hatem1995").toLowerCase()));
+		System.out.println(hashSHA1("1234"));
+		System.out.println(new String("7110eda4d09e062aa5e4a390b0a572ac0d2c0220")
+				.equals(hashSHA1("1234").toLowerCase()));
 	}
 
 }

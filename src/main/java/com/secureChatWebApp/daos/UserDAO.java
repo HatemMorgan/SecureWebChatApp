@@ -7,6 +7,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Signature;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -27,6 +28,7 @@ public class UserDAO extends JdbcDaoSupport {
 		String SQL = "insert into users (user_name, password, rsa_pub_key_enc, rsa_pub_key_sign) "
 				+ "values (?, ?, ?, ?)";
 		try {
+			
 			int inserted = this.getJdbcTemplate().update(SQL, userName, password, rsaPubKeyEnc, rsaPubKeySign);
 			return inserted;
 		} catch (DuplicateKeyException e) {

@@ -24,6 +24,7 @@ $scope.client2 = {
   publicKeyStr:publicKeyStr2
 };
 
+
 console.log("In Client controller");
 
 console.log($scope.messageModel);
@@ -42,6 +43,7 @@ $scope.encryptMessage = function(){
   var decryptedMessage = cryptico.decrypt(encryptedMessage.cipher,$scope.client2.RSAKeys);
   console.log("DecryptedMessage by Client 2: " + decryptedMessage.plaintext);
 }
+console.log("---->"+cryptico.getPubKey($scope.client2.RSAKeys));
  cryptico.RSADecrypt("fiatfxhna1kU9vA8m6REBShuHGFIPniC0sKxgdF0h7URULZaOp1i7RgTDrLCK+JdfAYQFUavOO+PUS14l83mzA==",$scope.client2.RSAKeys);
 // cryptico.RSAEncrypt("Hatem",$scope.client2.publicKeyStr);
 var n = "ac6e04127fb95c18435df0fcbcbee86d5a57656b57e516bc12b9abbd80451f1b548501278db91d588c2eac517fe07e972a8ca39b0cbb4d09af202a9fc0bfd44f";
@@ -70,6 +72,9 @@ var utc = d.toUTCString();
 var epoch = d.getTime();
 console.log(epoch);
 
-var hash = cryptico.sha256("1234");
+var hash = cryptico.sha1("1234");
+console.log(hash.length);
 console.log(hash);
+
+
 });
