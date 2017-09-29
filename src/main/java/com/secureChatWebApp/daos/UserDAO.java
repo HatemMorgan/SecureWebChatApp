@@ -49,19 +49,19 @@ public class UserDAO extends JdbcDaoSupport {
 		return authenticated;
 	}
 
-	public List<String> getUsers(int offset, int limit) {
+	public List<String> getUsers(String userName,int offset, int limit) {
 		List<String> users;
 
 		if (limit == -1) {
-			String SQL = "select user_name from users order by user_name";
-			users = this.getJdbcTemplate().queryForList(SQL, String.class);
+			String SQL = "select user_name from users where user_name != ? order by user_name";
+			users = this.getJdbcTemplate().queryForList(SQL,new Object[]{userName}, String.class);
 		} else {
 			if (offset == -1) {
-				String SQL = "select user_name from users order by user_name LIMIT ?";
-				users = this.getJdbcTemplate().queryForList(SQL, new Object[] { limit }, String.class);
+				String SQL = "select user_name from users where user_name != ? order by user_name LIMIT ?";
+				users = this.getJdbcTemplate().queryForList(SQL, new Object[] {userName, limit }, String.class);
 			} else {
-				String SQL = "select user_name from users order by user_name LIMIT ? OFFSET ?";
-				users = this.getJdbcTemplate().queryForList(SQL, new Object[] { limit, offset }, String.class);
+				String SQL = "select user_name from users where user_name != ? order by user_name LIMIT ? OFFSET ?";
+				users = this.getJdbcTemplate().queryForList(SQL, new Object[] {userName, limit, offset }, String.class);
 
 			}
 		}

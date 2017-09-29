@@ -65,6 +65,10 @@ public class UserDAOTest {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
+		
+		userDAO.createUser("test1", "2123ejdq124fa32",
+				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
+				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
 		userDAO.createUser("test2", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
@@ -78,12 +82,13 @@ public class UserDAOTest {
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
-		List<String> contacts = userDAO.getUsers(1, 2);
+		List<String> contacts = userDAO.getUsers("test",1, 2);
 
 		assertEquals("Failure,Wrong user fetched", "test2", contacts.get(0));
 		assertEquals("Failure,Wrong user fetched", "test3", contacts.get(1));
 
 		userDAO.deleteUser("test");
+		userDAO.deleteUser("test1");
 		userDAO.deleteUser("test2");
 		userDAO.deleteUser("test3");
 		userDAO.deleteUser("test4");
@@ -95,6 +100,10 @@ public class UserDAOTest {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
+		
+		userDAO.createUser("test1", "2123ejdq124fa32",
+				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
+				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
 		userDAO.createUser("test2", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
@@ -108,13 +117,14 @@ public class UserDAOTest {
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
-		List<String> contacts = userDAO.getUsers(-1, -1);
-		assertEquals("Failure,Wrong user fetched", "test", contacts.get(0));
+		List<String> contacts = userDAO.getUsers("test",-1, -1);
+		assertEquals("Failure,Wrong user fetched", "test1", contacts.get(0));
 		assertEquals("Failure,Wrong user fetched", "test2", contacts.get(1));
 		assertEquals("Failure,Wrong user fetched", "test3", contacts.get(2));
 		assertEquals("Failure,Wrong user fetched", "test4", contacts.get(3));
 
 		userDAO.deleteUser("test");
+		userDAO.deleteUser("test1");
 		userDAO.deleteUser("test2");
 		userDAO.deleteUser("test3");
 		userDAO.deleteUser("test4");
@@ -126,6 +136,10 @@ public class UserDAOTest {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
+		
+		userDAO.createUser("test1", "2123ejdq124fa32",
+				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
+				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
 		userDAO.createUser("test2", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
@@ -139,12 +153,13 @@ public class UserDAOTest {
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
-		List<String> contacts = userDAO.getUsers(-1, 2);
+		List<String> contacts = userDAO.getUsers("test",-1, 2);
 
-		assertEquals("Failure,Wrong user fetched", "test", contacts.get(0));
+		assertEquals("Failure,Wrong user fetched", "test1", contacts.get(0));
 		assertEquals("Failure,Wrong user fetched", "test2", contacts.get(1));
 
 		userDAO.deleteUser("test");
+		userDAO.deleteUser("test1");
 		userDAO.deleteUser("test2");
 		userDAO.deleteUser("test3");
 		userDAO.deleteUser("test4");
