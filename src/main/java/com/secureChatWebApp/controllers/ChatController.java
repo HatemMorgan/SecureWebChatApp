@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +44,7 @@ public class ChatController {
 		String senderName = (String) request.getAttribute("userName");
 
 		// response JSON
-		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<String, String>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
@@ -262,7 +261,8 @@ public class ChatController {
 	public ResponseEntity<LinkedHashMap<String, Object>> getOldMessages(
 			@RequestParam(value = "receiverName", required = true) String receiverName,
 			@RequestParam(value = "offset", required = false) Optional<Integer> optionalOffset,
-			@RequestParam(value = "limit", required = false) Optional<Integer> optionalLimit, HttpServletRequest request) {
+			@RequestParam(value = "limit", required = false) Optional<Integer> optionalLimit,
+			HttpServletRequest request) {
 
 		int offset;
 		int limit;

@@ -26,7 +26,7 @@ public class PublicKeysController {
 	public ResponseEntity<LinkedHashMap<String, String>> getEncryptionPublicKey() {
 		long startTime = System.currentTimeMillis();
 
-		LinkedHashMap<String, String> json = new LinkedHashMap<>();
+		LinkedHashMap<String, String> json = new LinkedHashMap<String, String>();
 		json.put("encryptionPubKey", publicKeysService.getEncryptionPublicKey());
 
 		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);

@@ -48,7 +48,7 @@ public class ContactsController {
 		String userName = (String) request.getAttribute("userName");
 		
 		// response JSON
-		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<String, Object>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)

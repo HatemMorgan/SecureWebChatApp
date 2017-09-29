@@ -28,7 +28,7 @@ public class LoginController {
 		long startTime = (long) request.getAttribute("startTime");
 
 		// response JSON
-		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<String, String>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
