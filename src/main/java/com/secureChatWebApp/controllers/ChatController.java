@@ -110,8 +110,8 @@ public class ChatController {
 		 * load attributes set in the Security intercepter to check if the user
 		 * is valid and authenticated
 		 */
-		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
-		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
+		Boolean isAuthenticated = (Boolean) request.getAttribute("isAuthenticated");
+		Boolean isValidUser = (Boolean) request.getAttribute("isValidUser");
 
 		// get startTime.longValue() added by Security intercepter
 		Long startTime = (Long) request.getAttribute("startTime");
@@ -124,7 +124,7 @@ public class ChatController {
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
-		if (!isValidUser) {
+		if (!isValidUser.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
@@ -134,7 +134,7 @@ public class ChatController {
 
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
-		if (!isAuthenticated) {
+		if (!isAuthenticated.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
@@ -189,11 +189,11 @@ public class ChatController {
 		 * load attributes set in the Security intercepter to check if the user
 		 * is valid and authenticated
 		 */
-		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
-		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
+		Boolean isAuthenticated = (Boolean) request.getAttribute("isAuthenticated");
+		Boolean isValidUser = (Boolean) request.getAttribute("isValidUser");
 
 		// get startTime.longValue() added by Security intercepter
-		Long startTime = (long) request.getAttribute("startTime");
+		Long startTime = (Long) request.getAttribute("startTime");
 
 		// get userName from added by Security intercepter from access token
 		String senderName = (String) request.getAttribute("userName");
@@ -203,7 +203,7 @@ public class ChatController {
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
-		if (!isValidUser) {
+		if (!isValidUser.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
@@ -213,7 +213,7 @@ public class ChatController {
 
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
-		if (!isAuthenticated) {
+		if (!isAuthenticated.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
@@ -274,8 +274,8 @@ public class ChatController {
 		 * load attributes set in the Security intercepter to check if the user
 		 * is valid and authenticated
 		 */
-		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
-		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
+		Boolean isAuthenticated = (Boolean) request.getAttribute("isAuthenticated");
+		Boolean isValidUser = (Boolean) request.getAttribute("isValidUser");
 
 		// get startTime.longValue() added by Security intercepter
 		Long startTime = (Long) request.getAttribute("startTime");
@@ -288,7 +288,7 @@ public class ChatController {
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
-		if (!isValidUser) {
+		if (!isValidUser.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
@@ -298,7 +298,7 @@ public class ChatController {
 
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
-		if (!isAuthenticated) {
+		if (!isAuthenticated.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
