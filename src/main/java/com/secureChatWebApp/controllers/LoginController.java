@@ -21,8 +21,8 @@ public class LoginController {
 		 * load attributes set in the Security intercepter to check if the user
 		 * is valid and authenticated
 		 */
-		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
-		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
+		Boolean isAuthenticated = (Boolean) request.getAttribute("isAuthenticated");
+		Boolean isValidUser = (Boolean) request.getAttribute("isValidUser");
 
 		// get startTime added by Security intercepter
 		long startTime = (long) request.getAttribute("startTime");
@@ -32,7 +32,7 @@ public class LoginController {
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
-		if (!isValidUser) {
+		if (!isValidUser.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 			responseJSON.put("domain", "Login");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
@@ -42,7 +42,7 @@ public class LoginController {
 
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
-		if (!isAuthenticated) {
+		if (!isAuthenticated.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
 			responseJSON.put("domain", "Login");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "

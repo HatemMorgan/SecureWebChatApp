@@ -34,11 +34,11 @@ public class ChatController {
 		 * load attributes set in the Security intercepter to check if the user
 		 * is valid and authenticated
 		 */
-		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
-		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
-
-		// get startTime added by Security intercepter
-		long startTime = (long) request.getAttribute("startTime");
+		Boolean isAuthenticated = (Boolean) request.getAttribute("isAuthenticated");
+		Boolean isValidUser = (Boolean) request.getAttribute("isValidUser");
+		
+		// get startTime.longValue() added by Security intercepter
+		Long startTime = (Long) request.getAttribute("startTime");
 
 		// get userName from added by Security intercepter from access token
 		String senderName = (String) request.getAttribute("userName");
@@ -48,8 +48,8 @@ public class ChatController {
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
-		if (!isValidUser) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		if (!isValidUser.booleanValue()) {
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -58,8 +58,8 @@ public class ChatController {
 
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
-		if (!isAuthenticated) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		if (!isAuthenticated.booleanValue()) {
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
@@ -72,7 +72,7 @@ public class ChatController {
 			// call to chat service to add new chat key between two users
 			chatService.intiateNewChat(senderName, receiverName, requestBody);
 
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("message", "Chat intiated successfully");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -83,7 +83,7 @@ public class ChatController {
 			 * RequestException(custom exception) thrown if request validation
 			 * failed or request body was corrupted
 			 */
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", e.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -93,7 +93,7 @@ public class ChatController {
 
 			// other exceptions not handled by service thrown and send
 			// INTERNAL_SERVER_ERROR status code (500)
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", ex.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -113,8 +113,8 @@ public class ChatController {
 		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
 		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
 
-		// get startTime added by Security intercepter
-		long startTime = (long) request.getAttribute("startTime");
+		// get startTime.longValue() added by Security intercepter
+		Long startTime = (Long) request.getAttribute("startTime");
 
 		// get userName from added by Security intercepter from access token
 		String senderName = (String) request.getAttribute("userName");
@@ -125,7 +125,7 @@ public class ChatController {
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
 		if (!isValidUser) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -135,7 +135,7 @@ public class ChatController {
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
 		if (!isAuthenticated) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
@@ -150,7 +150,7 @@ public class ChatController {
 			// inserted encrypted after encryption by user
 			String data = chatService.getEncryptedChatKey(senderName, receiverName);
 
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("data", data);
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -161,7 +161,7 @@ public class ChatController {
 			 * RequestException(custom exception) thrown if request validation
 			 * failed or request body was corrupted
 			 */
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", e.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -171,7 +171,7 @@ public class ChatController {
 
 			// other exceptions not handled by service thrown and send
 			// INTERNAL_SERVER_ERROR status code (500)
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", ex.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -192,8 +192,8 @@ public class ChatController {
 		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
 		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
 
-		// get startTime added by Security intercepter
-		long startTime = (long) request.getAttribute("startTime");
+		// get startTime.longValue() added by Security intercepter
+		Long startTime = (long) request.getAttribute("startTime");
 
 		// get userName from added by Security intercepter from access token
 		String senderName = (String) request.getAttribute("userName");
@@ -204,7 +204,7 @@ public class ChatController {
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
 		if (!isValidUser) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -214,7 +214,7 @@ public class ChatController {
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
 		if (!isAuthenticated) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
@@ -227,7 +227,7 @@ public class ChatController {
 			// call to chat service to add new message to database
 			chatService.addMessage(senderName, receiverName, requestBody);
 
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("message", "Message sent successfully");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -238,7 +238,7 @@ public class ChatController {
 			 * RequestException(custom exception) thrown if request validation
 			 * failed or request body was corrupted
 			 */
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", e.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -248,7 +248,7 @@ public class ChatController {
 
 			// other exceptions not handled by service thrown and send
 			// INTERNAL_SERVER_ERROR status code (500)
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", ex.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -277,8 +277,8 @@ public class ChatController {
 		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
 		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
 
-		// get startTime added by Security intercepter
-		long startTime = (long) request.getAttribute("startTime");
+		// get startTime.longValue() added by Security intercepter
+		Long startTime = (Long) request.getAttribute("startTime");
 
 		// get userName from added by Security intercepter from access token
 		String senderName = (String) request.getAttribute("userName");
@@ -289,7 +289,7 @@ public class ChatController {
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
 		if (!isValidUser) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -299,7 +299,7 @@ public class ChatController {
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
 		if (!isAuthenticated) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
@@ -312,7 +312,7 @@ public class ChatController {
 			// call chat service to get old messages
 			List<Message> messages = chatService.getOldMessages(senderName, receiverName, offset, limit);
 
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("messages", messages);
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -323,7 +323,7 @@ public class ChatController {
 			 * RequestException(custom exception) thrown if request validation
 			 * failed or request body was corrupted
 			 */
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", e.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -333,7 +333,7 @@ public class ChatController {
 
 			// other exceptions not handled by service thrown and send
 			// INTERNAL_SERVER_ERROR status code (500)
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", ex.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
