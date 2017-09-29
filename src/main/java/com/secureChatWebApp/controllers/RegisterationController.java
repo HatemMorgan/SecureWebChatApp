@@ -1,6 +1,5 @@
 package com.secureChatWebApp.controllers;
 
-import java.util.Hashtable;
 import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class RegisterationController {
 	public ResponseEntity<LinkedHashMap<String, String>> register(
 			@RequestBody LinkedHashMap<String, String> requestBody) {
 		long startTime = System.currentTimeMillis();
-		LinkedHashMap<String, String> json = new LinkedHashMap<>();
+		LinkedHashMap<String, String> json = new LinkedHashMap<String, String>();
 		try {
 
 			registrationService.register(requestBody.get("data"));

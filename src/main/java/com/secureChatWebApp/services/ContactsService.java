@@ -63,7 +63,7 @@ public class ContactsService {
 	 */
 	public LinkedHashMap<String, String> getContactPubKeys(String contactName) {
 		User contact = userDAO.getUser(contactName);
-		LinkedHashMap<String, String> map = new LinkedHashMap<>();
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		map.put("encryptionPubKey", contact.getRsaPubKeyEnc());
 		map.put("signaturePubKey", contact.getRsaPubKeySign());
 		return map;

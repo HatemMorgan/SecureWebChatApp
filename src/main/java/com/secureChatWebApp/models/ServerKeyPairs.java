@@ -45,8 +45,13 @@ public class ServerKeyPairs {
 			try {
 				readKeys();
 				//
-			} catch (IOException | InvalidKeySpecException ex) {
+			} catch (IOException  ex) {
 				System.out.println(ex.getMessage());
+				// IOException or InvalidKeySpecException thrown
+				// then generate new keys and write them
+				writeKeys();
+			}catch ( InvalidKeySpecException ex2) {
+				System.out.println(ex2.getMessage());
 				// IOException or InvalidKeySpecException thrown
 				// then generate new keys and write them
 				writeKeys();

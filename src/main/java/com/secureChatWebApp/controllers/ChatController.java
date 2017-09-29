@@ -120,7 +120,7 @@ public class ChatController {
 		String senderName = (String) request.getAttribute("userName");
 
 		// response JSON
-		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<String, String>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
@@ -199,7 +199,7 @@ public class ChatController {
 		String senderName = (String) request.getAttribute("userName");
 
 		// response JSON
-		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<String, String>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
@@ -284,7 +284,7 @@ public class ChatController {
 		String senderName = (String) request.getAttribute("userName");
 
 		// response JSON
-		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<String, Object>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
