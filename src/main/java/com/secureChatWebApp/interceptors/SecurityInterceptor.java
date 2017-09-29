@@ -59,6 +59,12 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		System.out.println("in the logging Interceptor");
+		
+		// start timer for the request and add it as an attribute to request
+		// to be used by handler to calculate time taken to process request
+		// and return it in the response
+		long startTime = System.currentTimeMillis();
+		request.setAttribute("startTime", startTime);
 
 		boolean isAuthenticated;
 		boolean isValidUser;
@@ -104,7 +110,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 		request.setAttribute("isValidUser", isValidUser);
 		return true;
 	}
-
+	
 	/**
 	 * Check that request date is valid by checking that the difference between
 	 * current date and request date is smaller than delay attribute

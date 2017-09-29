@@ -36,7 +36,7 @@ public class RegistrationService {
 
 		if (body.length != 5)
 			throw new RequestException(
-					"Invalid request body. request body JSON must have a data key with value= RSAEnc({userName}:{hashPassword}:{encPubKey}:{signPubKey}):RSASign({userName}:{hashPassword}:{encPubKey}:{signPubKey})");
+					"Invalid request body. request body JSON must have a data key with value= {userName}-RSAEnc({hashPassword})-{encPubKey}-{signPubKey}-RSASign({userName}-{hashPassword}-{encPubKey}-{signPubKey})");
 
 		String username = body[0];
 		String cipherText = body[1];
@@ -74,7 +74,7 @@ public class RegistrationService {
 
 		} catch (BadPaddingException e) {
 			throw new RequestException(
-					"InValid Encrypted message. {userName}:{hashPassword}:{encPubKey}:{signPubKey} must be encrypted by server's public key");
+					"InValid Encrypted message. {hashPassword} must be encrypted by server's public key");
 		}
 
 	}
