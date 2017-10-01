@@ -1,4 +1,4 @@
-app.controller('homeController', function($scope) {
+angular.module('mainApp').controller('homeController', function($scope) {
 
 	$scope.register = function() {
 		window.location = "#/registeration"

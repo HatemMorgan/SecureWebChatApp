@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Contacts</title>
+    <link href="../css/contacts.css" rel="stylesheet">
+
+    <style type="text/css">
+    	#messages {
+    		border: 1px solid #999;
+    		padding: 0.5em;
+    		margin: 1em 0;
+    		height: 20em;
+    		overflow: auto;
+    	}
+    </style>
+
+  </head>
+  <body ng-controller="contactsController">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+    <table id="myTable">
+      <tr class="header">
+        <th style="width:60%;">Name</th>
+        <th style="width:40%;">Country</th>
+      </tr>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td>Germany</td>
+      </tr>
+      <tr>
+        <td>Berglunds snabbkop</td>
+        <td>Sweden</td>
+      </tr>
+      <tr>
+        <td>Island Trading</td>
+        <td>UK</td>
+      </tr>
+
+    </table>
+
+
+
+  </body>
+</html>

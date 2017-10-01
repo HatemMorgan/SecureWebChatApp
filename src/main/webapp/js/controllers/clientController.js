@@ -1,4 +1,4 @@
-app.controller('ClientController',function($scope){
+angular.module('mainApp').controller('ClientController',function($scope){
 console.log("clientController");
 var userName1 = "RaniaWael";
 var password1= "1234";

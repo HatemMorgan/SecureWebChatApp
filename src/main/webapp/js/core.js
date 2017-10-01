@@ -1,10 +1,11 @@
-var app = angular.module('mainApp', [ 'ui.bootstrap', 'ngRoute' ]);
+(function () {
+    'use strict';
+var app = angular.module('mainApp', ['ngRoute', 'ngCookies']);
 console.log(app);
 /**
  * Angular Routes
  */
 app.config(function($routeProvider) {
-
 	// route for the home page
 	$routeProvider.when('/home', {
 		templateUrl : 'partials/home.html',
@@ -12,7 +13,7 @@ app.config(function($routeProvider) {
 	});
 
 	// route for the registeration page
-	$routeProvider.when('/registeration', {
+	$routeProvider.when('/register', {
 		templateUrl : 'partials/registerPage.html',
 		controller : 'registerController'
 	});
@@ -37,6 +38,28 @@ app.config(function($routeProvider) {
 
 	// if none of the above states are matched, use this as the fallback
 	$routeProvider.otherwise({
-		redirectTo : '/home'
+		redirectTo : '/login'
 	});
 });
+
+app.run(run);
+
+run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
+	 function run($rootScope, $location, $cookies, $http) {
+			 // keep user logged in after page refresh
+			 $rootScope.globals = $cookies.getObject('globals') || {};
+			 if ($rootScope.globals.currentUser) {
+					 $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+			 }
+
+			 $rootScope.$on('$locationChangeStart', function (event, next, current) {
+					 // redirect to login page if not logged in and trying to access a restricted page
+					 var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+					 var loggedIn = $rootScope.globals.currentUser;
+					 if (restrictedPage && !loggedIn) {
+							 $location.path('/login');
+					 }
+			 });
+	 }
+
+})();

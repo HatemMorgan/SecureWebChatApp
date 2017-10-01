@@ -26,44 +26,55 @@
 </body>
 -->
 <head>
-	<title>Client Chat Application</title>
+<title>Client Chat Application</title>
 
-	<!-- Bootstrap Core CSS -->
-  	<link href="css/bootstrap.css" rel="stylesheet">
-   <!-- Custom CSS -->
-    <link href="css/custom.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 
-		<!-- requiring externals libraries  -->
+<!-- Custom CSS -->
+<link href="css/app.css" rel="stylesheet">
 
-		<script src="lib/jquery-2.2.0.min.js"></script>
+
+
+<!-- requiring externals libraries  -->
+
+<!-- <script src="lib/jquery-2.2.0.min.js"></script>
 		<script src="lib/angular.min.js"></script>
-		<script src="lib/angular-route.min.js"></script>
-		<script src="lib/bootstrap.min.js"></script>
-		<script src="lib/ui-bootstrap-tpls-1.2.5.min.js"></script>
-		<script src="lib/CryptoAlgorithms/aes.js"></script>
-		<script src="lib/CryptoAlgorithms/ClientCrypto.js"></script>
-		<script src="lib/CryptoAlgorithms/hash.js"></script>
-		<script src="lib/CryptoAlgorithms/jsbn.js"></script>
-		<script src="lib/CryptoAlgorithms/random.js"></script>
-		<script src="lib/CryptoAlgorithms/rsa.js"></script>
-		<script src="lib/CryptoAlgorithms/api.js"></script>
+		<script src="lib/angular-route.min.js"></script> -->
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="http://code.angularjs.org/1.6.0/angular.min.js"></script>
+<script src="http://code.angularjs.org/1.6.0/angular-route.min.js"></script>
+<script src="http://code.angularjs.org/1.6.0/angular-cookies.min.js"></script>
+<!-- <script src="lib/bootstrap.min.js"></script>
+<script src="lib/ui-bootstrap-tpls-1.2.5.min.js"></script> -->
+<script src="lib/CryptoAlgorithms/aes.js"></script>
+<script src="lib/CryptoAlgorithms/ClientCrypto.js"></script>
+<script src="lib/CryptoAlgorithms/hash.js"></script>
+<script src="lib/CryptoAlgorithms/jsbn.js"></script>
+<script src="lib/CryptoAlgorithms/random.js"></script>
+<script src="lib/CryptoAlgorithms/rsa.js"></script>
+<script src="lib/CryptoAlgorithms/api.js"></script>
 
-		<!-- including core.js that contains angular routes  -->
-		 <script src="js/core.js"></script>
+<!-- including core.js that contains angular routes  -->
+<script src="js/core.js"></script>
+<script src="js/services/mainService.js"></script>
+<script src="js/services/authenticationService.js"></script>
+<script src="js/services/registerationService.js"></script>
 
-		 <!--include angluar services  -->
+
+<!--include angluar services  -->
 
 
-		 <!--include angular controllers  -->
-		<script src="js/controllers/homeController.js"></script>
-		<script src="js/controllers/clientController.js"></script>
-		<script src="js/controllers/registerationController.js"></script>
-		<script src="js/controllers/loginController.js"></script>
+<!--include angular controllers  -->
+<script src="js/controllers/homeController.js"></script>
+<script src="js/controllers/clientController.js"></script>
+<script src="js/controllers/registerationController.js"></script>
+<script src="js/controllers/loginController.js"></script>
 
 
 </head>
 <body ng-app="mainApp">
-	<div  class="col-lg-6" ng-controller="ClientController">
+	<!-- <div  class="col-lg-6" ng-controller="ClientController">
 			<h3>Client: <b>{{client1.userName}}</b></h3>
 			<div class="form-group">
 			<label for="InputMessage">Message</label>
@@ -71,9 +82,17 @@
 				<textarea name="InputMessage" id="InputMessage" class="form-control" rows="5" required ng-model="messageModel"></textarea>
 			</div>
 			 <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right" ng-click="encryptMessage()" >
-		</div>
+		</div> -->
 
-		<div ng-view></div>
+		<div class="jumbotron">
+			<div class="container">
+					<div class="col-sm-8 col-sm-offset-2">
+							<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+							<div ng-view></div>
+					</div>
+			</div>
+	</div>
+	
 </body>
 
 </html>
