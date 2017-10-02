@@ -59,7 +59,7 @@
           var token = service.CreateAccessToken(username,password);
           var req = {
              method: 'GET',
-             url: '/rest/login',
+             url: 'rest/login',
              headers:
                      {
                        'x-access-token': token

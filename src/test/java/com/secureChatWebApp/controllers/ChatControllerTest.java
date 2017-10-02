@@ -45,6 +45,7 @@ import com.secureChatWebApp.configs.AppConfig;
 import com.secureChatWebApp.daos.ChatDAO;
 import com.secureChatWebApp.daos.MessageDAO;
 import com.secureChatWebApp.daos.UserDAO;
+import com.secureChatWebApp.exceptions.DatabaseException;
 import com.secureChatWebApp.models.Message;
 import com.secureChatWebApp.models.ServerKeyPairs;
 import com.secureChatWebApp.models.User;
@@ -370,8 +371,9 @@ public class ChatControllerTest {
 
 	/**
 	 * Create another user and add him to database in order to be fetched
+	 * @throws DatabaseException 
 	 */
-	private User addAnotherUser() {
+	private User addAnotherUser() throws DatabaseException {
 		User user = new User();
 		user.setUserName("test2");
 		user.setPassword("2123ejdq124fa32");

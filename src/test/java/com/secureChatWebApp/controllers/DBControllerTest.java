@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secureChatWebApp.configs.AppConfig;
 import com.secureChatWebApp.daos.MessageDAO;
 import com.secureChatWebApp.daos.UserDAO;
+import com.secureChatWebApp.exceptions.DatabaseException;
 import com.secureChatWebApp.models.Message;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -97,7 +98,7 @@ public class DBControllerTest {
 
 	}
 
-	private void addMessages() throws InterruptedException {
+	private void addMessages() throws InterruptedException, DatabaseException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");

@@ -1,21 +1,33 @@
-angular.module('mainApp').controller('loginController',function($scope,$location, AuthenticationService){
+angular.module('mainApp').controller('loginController',function($scope,$location,$rootScope, AuthenticationService){
   console.log("in loginController");
 
   (function initController() {
+            // check if $rootScope.globals exist or not which means that user user credentials are loaded from cookies
+            if($rootScope.globals && $rootScope.globals.currentUser ){
+              console.log($rootScope.globals);
+              $location.path('/home');
+            }else{
              // reset login status
              AuthenticationService.ClearCredentials();
+
+             // set loginError flag of span tag that shows error message if login failed
+             $scope.loginError = false;
+           }
          })();
 
-  function login() {
+  $scope.login = function login() {
+    console.log("hereee");
         // enable dataLoading to show loading gif
-        this.dataLoading = true;
+        $scope.dataLoading = true;
         // call AuthenticationService to login
-        AuthenticationService.Login(this.username, this.password, function (response) {
-            if (response.success) {
-                AuthenticationService.SetCredentials(this.username, this.password);
+        AuthenticationService.Login($scope.username,$scope.password, function (response) {
+            if (response.status == 200) {
+                AuthenticationService.SetCredentials($scope.username,$scope.password);
                 $location.path('/home');
             } else {
-                this.dataLoading = false;
+                $scope.dataLoading = false;
+                $scope.loginError = true;
+
             }
         });
     };

@@ -6,7 +6,7 @@
 body {
 	background: #e9e9e9;
 	color: #9a9a9a;
-	font: 100%/1.5em "Droid Sans", sans-serif;
+	font: 100%/1.5em, sans-serif;
 	margin: 0;
 }
 
@@ -142,7 +142,7 @@ p { margin: 0; }
 }
 
 .chat-history {
-	height: 252px;
+	height: 75%;
 	padding: 8px 24px;
 	overflow-y: scroll;
 }

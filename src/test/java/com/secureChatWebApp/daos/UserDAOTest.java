@@ -10,6 +10,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.secureChatWebApp.exceptions.DatabaseException;
 import com.secureChatWebApp.models.User;
 
 public class UserDAOTest {
@@ -30,25 +31,19 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testCreateUser() {
+	public void testCreateUser() throws DatabaseException {
 		int inserted = userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
 		assertEquals("Failure, Cannot insert a new user.", 1, inserted);
 
-		int inserted2 = userDAO.createUser("test", "2123ejdq124fa32",
-				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
-				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
-
-		assertEquals("Failure, Cannot insert a new user with pretaken userName", 0, inserted2);
-
 		userDAO.deleteUser("test");
 
 	}
 
 	@Test
-	public void testAuthenticateUser() {
+	public void testAuthenticateUser() throws DatabaseException {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -61,7 +56,7 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testGetUsers() {
+	public void testGetUsers() throws DatabaseException {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -96,7 +91,7 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testGetUsers2() {
+	public void testGetUsers2() throws DatabaseException {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -132,7 +127,7 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testGetUsers3() {
+	public void testGetUsers3() throws DatabaseException {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -167,7 +162,7 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testDeleteUser() {
+	public void testDeleteUser() throws DatabaseException {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -181,7 +176,7 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testGetUser() {
+	public void testGetUser() throws DatabaseException {
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");

@@ -39,6 +39,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secureChatWebApp.configs.AppConfig;
 import com.secureChatWebApp.daos.UserDAO;
+import com.secureChatWebApp.exceptions.DatabaseException;
 import com.secureChatWebApp.models.User;
 import com.secureChatWebApp.utilites.HashUtility;
 import com.secureChatWebApp.utilites.RSAUtility;
@@ -233,8 +234,9 @@ public class ContactsControllerTest {
 
 	/**
 	 * Create some users and add them to database in order to fetch
+	 * @throws DatabaseException 
 	 */
-	private List<String> addSomeUsers() {
+	private List<String> addSomeUsers() throws DatabaseException {
 		List<String> users = new ArrayList<String>();
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",

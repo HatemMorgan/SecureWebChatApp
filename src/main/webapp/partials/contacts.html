@@ -1,43 +1,188 @@
 <html>
-  <head>
-    <title>Contacts</title>
-    <link href="../css/contacts.css" rel="stylesheet">
+<head>
+<title>Contacts</title>
 
-    <style type="text/css">
-    	#messages {
-    		border: 1px solid #999;
-    		padding: 0.5em;
-    		margin: 1em 0;
-    		height: 20em;
-    		overflow: auto;
-    	}
-    </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+<link href="../css/chat.css" rel="stylesheet">
+<link href="../css/contacts.css" rel="stylesheet">
 
-  </head>
-  <body ng-controller="contactsController">
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+<style type="text/css">
+#messages {
+	border: 1px solid #999;
+	padding: 0.5em;
+	margin: 1em 0;
+	height: 20em;
+	overflow: auto;
+}
 
-    <table id="myTable">
-      <tr class="header">
-        <th style="width:60%;">Name</th>
-        <th style="width:40%;">Country</th>
-      </tr>
-      <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Germany</td>
-      </tr>
-      <tr>
-        <td>Berglunds snabbkop</td>
-        <td>Sweden</td>
-      </tr>
-      <tr>
-        <td>Island Trading</td>
-        <td>UK</td>
-      </tr>
+.first-column {
+  width: 40%;
+  float: left;
+}
 
-    </table>
+.second-column {
+  width: 59%;
+  float: right;
+}
+</style>
+
+</head>
+<body ng-controller="contactsController">
+	<!-- <div class="modal-body row"> -->
+		<div class="first-column">
+			<!-- Your first column here -->
+			<input type="text" id="myInput" onkeyup="myFunction()"
+				placeholder="Search for names..">
+
+			<table id="myTable">
+				<tr class="header">
+					<th style="width: 40%;">Picture</th>
+					<th style="width: 60%;">UserName</th>
+				</tr>
+				<tr>
+					<td>	<img src="../assets/no_profile_img.jpg" alt="" width="32" height="32"></td>
+					<td>Alfreds Futterkiste</td>
+				</tr>
+				<tr>
+					<td>	<img src="../assets/no_profile_img.jpg" alt="" width="32" height="32"></td>
+					<td>Berglunds snabbkop</td>
+				</tr>
+				<tr>
+					<td>	<img src="../assets/no_profile_img.jpg" alt="" width="32" height="32"></td>
+					<td>Island Trading</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<div class="second-column">
+			<!-- Your second column here -->
+			<div id="live-chat">
+
+				<header class="clearfix">
+
+					<a href="#" class="chat-close">x</a>
+
+					<h4>John Doe</h4>
+
+					<span class="chat-message-counter">3</span>
+
+				</header>
+
+				<div class="chat">
+
+					<div class="chat-history" id="scroll">
+
+						<div class="chat-message clearfix">
+
+							<img src="../assets/no_profile_img.jpg" alt="" width="32"
+								height="32">
+
+							<div class="chat-message-content clearfix">
+
+								<span class="chat-time">13:35</span>
+
+								<h5>John Doe</h5>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+									Error, explicabo quasi ratione odio dolorum harum.</p>
+
+							</div>
+							<!-- end chat-message-content -->
+
+						</div>
+						<!-- end chat-message -->
+
+						<hr>
+
+						<div class="chat-message clearfix">
+
+							<img
+								src="../assets/no_profile_img.jpg"
+								alt="" width="32" height="32">
+
+							<div class="chat-message-content clearfix">
+
+								<span class="chat-time">10/02/2017 08:35</span>
+
+								<h5>Marco Biedermann</h5>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+									Blanditiis, nulla accusamus magni vel debitis numquam qui
+									tempora rem voluptatem delectus!</p>
+
+							</div>
+							<!-- end chat-message-content -->
+
+						</div>
+						<!-- end chat-message -->
+
+						<hr>
+
+						<div class="chat-message clearfix">
+
+							<img src="../assets/no_profile_img.jpg" alt="" width="32"
+								height="32">
+
+							<div class="chat-message-content clearfix">
+
+								<span class="chat-time">13:38</span>
+
+								<h5>John Doe</h5>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+
+							</div>
+							<!-- end chat-message-content -->
+
+						</div>
+						<!-- end chat-message -->
+
+						<hr>
+
+					</div>
+					<!-- end chat-history -->
+
+					<!-- <p class="chat-feedback">Your partner is typing…</p> -->
+
+					<form action="#" method="post">
+
+            <div class="form-horizontal">
+    <div class="form-group">
+      <div class="col-xs-10">
+        <textarea class="form-control input-sm" rows="3" style="resize: none" ng-model="formData_EventDetails.serviceNowStr"   placeholder="Type your message…" autofocus></textarea>
+      </div>
+      <div class="col-xs-2">
+
+        <!-- <button class="btn uk-button btn-block btn-default " ng-click="viewServiceNowPopup(formData_EventDetails)"> &nbsp;View &nbsp;</button> -->
+        <button class="btn uk-button btn-block btn-success " style="margin-top:10%" ng-click="openServiceNowPopup(formData_EventDetails)">Send </button>
+
+      </div>
+
+    </div>
+  </div>
+						<!-- <fieldset>
+
+							<textarea class="form-control" style="   width: 70%;"   type="text" placeholder="Type your message…" autofocus></textarea>
+              <button type="button"   class="btn btn-success">send</button>
+					 </fieldset> -->
+
+					</form>
+
+				</div>
+				<!-- end chat -->
+
+			</div>
+			<!-- end live-chat -->
 
 
+		</div>
+	<!-- </div> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	<script>
+		$("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+	</script>
 
-  </body>
+</body>
 </html>

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,8 +53,6 @@ public class ChatDAOTest {
 
 		chatDAO.deleteChat("test1", "test2");
 		chatDAO.deleteChat("test2", "test1");
-		userDAO.deleteUser("test1");
-		userDAO.deleteUser("test2");
 	}
 
 	@Test(expected = DatabaseException.class)
@@ -64,8 +63,6 @@ public class ChatDAOTest {
 
 		chatDAO.create("test1", "test",
 				"iNUTHr3Tuu1HS8ihTbLdj5WMIx4URGjXYUB5cMSnJ3tAPEEEW9DpAjAMbemBsFTfq1xz/QbZEn/ddMLSycTofQ==");
-
-		userDAO.deleteUser("test1");
 	}
 
 	@Test
@@ -86,9 +83,6 @@ public class ChatDAOTest {
 
 		int deleted2 = chatDAO.deleteChat("test1", "test2");
 		assertEquals("Failure, delete chat that wasnot added before!", 0, deleted2);
-
-		userDAO.deleteUser("test1");
-		userDAO.deleteUser("test2");
 
 	}
 
@@ -111,9 +105,13 @@ public class ChatDAOTest {
 				encryptedKey);
 
 		chatDAO.deleteChat("test1", "test2");
-		userDAO.deleteUser("test1");
-		userDAO.deleteUser("test2");
+		
 
 	}
 
+	@After
+	public void tearDown(){
+		userDAO.deleteUser("test1");
+		userDAO.deleteUser("test2");
+	}
 }
