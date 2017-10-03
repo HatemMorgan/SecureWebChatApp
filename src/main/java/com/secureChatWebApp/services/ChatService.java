@@ -7,6 +7,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.activity.InvalidActivityException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,10 +65,11 @@ public class ChatService {
 	 * @throws SignatureException
 	 * @throws NoSuchAlgorithmException
 	 * @throws InvalidKeyException
+	 * @throws InvalidActivityException 
 	 */
 	public void intiateNewChat(String senderName, String receiverName, LinkedHashMap<String, String> body)
 			throws RequestException, InvalidKeyException, NoSuchAlgorithmException, SignatureException,
-			InvalidKeySpecException {
+			InvalidKeySpecException, InvalidActivityException {
 
 		// get body message components
 		String keyEncBySender = body.get("keyEncBySender");

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.activity.InvalidActivityException;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.After;
 import org.junit.Before;
@@ -33,7 +35,7 @@ public class ChatDAOTest {
 	}
 
 	@Test
-	public void testCreation() throws DatabaseException {
+	public void testCreation() throws DatabaseException, InvalidActivityException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -56,7 +58,7 @@ public class ChatDAOTest {
 	}
 
 	@Test(expected = DatabaseException.class)
-	public void testCreateUserWithInvalidReceiver() throws DatabaseException {
+	public void testCreateUserWithInvalidReceiver() throws DatabaseException, InvalidActivityException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -66,7 +68,7 @@ public class ChatDAOTest {
 	}
 
 	@Test
-	public void testDeleteChat() throws DatabaseException {
+	public void testDeleteChat() throws DatabaseException, InvalidActivityException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -87,7 +89,7 @@ public class ChatDAOTest {
 	}
 
 	@Test
-	public void testGetEncryptedChatKey() throws DatabaseException {
+	public void testGetEncryptedChatKey() throws DatabaseException, InvalidActivityException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");

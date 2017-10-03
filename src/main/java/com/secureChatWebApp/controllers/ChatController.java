@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
+import javax.activity.InvalidActivityException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +89,19 @@ public class ChatController {
 			responseJSON.put("errMessage", e.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.BAD_REQUEST);
-
-		} catch (Exception ex) {
+			
+			
+		}catch (InvalidActivityException invalidActivityException) {
+			/*
+			 * RequestException(custom exception) thrown if request validation
+			 * failed or request body was corrupted
+			 */
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
+			responseJSON.put("domain", "Chat");
+			responseJSON.put("errMessage", invalidActivityException.getMessage());
+			responseJSON.put("timeTaken", timeTaken + " seconds");
+			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.FOUND);
+		}catch (Exception ex) {
 
 			// other exceptions not handled by service thrown and send
 			// INTERNAL_SERVER_ERROR status code (500)

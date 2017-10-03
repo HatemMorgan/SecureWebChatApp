@@ -56,8 +56,10 @@
                  if(response){
                    // callback with true flag indicating that registeration
 					         // completed successfully
+                   console.log(response);
                    callback(true,response);
                  }else{
+                   console.log(response);
                    alert(response);
                    // callback with true flag indicating that registeration
 					         // failed
@@ -65,6 +67,7 @@
                  }
              },
              function errorCallback(response) {
+               console.log(response);
                alert(response);
                 callback(false,response);
              });

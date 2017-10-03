@@ -1,4 +1,4 @@
-angular.module('mainApp').controller('homeController', function($scope,$rootScope,$location) {
+angular.module('mainApp').controller('homeController', function($scope,$rootScope,$location,AuthenticationService) {
 
 	(function initController() {
 		console.log($rootScope.globals);

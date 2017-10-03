@@ -1,5 +1,6 @@
 package com.secureChatWebApp.daos;
 
+import javax.activity.InvalidActivityException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,14 @@ public class ChatDAO extends JdbcDaoSupport {
 	 * one can know this key except user1 (because he is the only one who has
 	 * the privatekey)
 	 */
-	public int create(String user1, String user2, String encryptedSymmetricKey) throws DatabaseException {
+	public int create(String user1, String user2, String encryptedSymmetricKey) throws DatabaseException, InvalidActivityException {
 		String SQL = "insert into chat (user1, user2, encrypted_key) values (?, ?,?)";
 		try {
 			int inserted = this.getJdbcTemplate().update(SQL, new Object[] { user1, user2, encryptedSymmetricKey });
 			return inserted;
 		} catch (DuplicateKeyException e) {
-
-			throw new DatabaseException(
-					"There is an already messages encryption key between user: " + user1 + " and user: " + user2 + ".");
+			throw new InvalidActivityException("There is an already messages encryption key between users.");
+		
 
 		} catch (DataIntegrityViolationException ex) {
 

@@ -17,6 +17,8 @@
         service.GetRSAEncObj = GetRSAEncObj;
         service.GetRSASignObj = GetRSASignObj;
         service.CreateTokenFromEncodedAuthData = CreateTokenFromEncodedAuthData;
+        service.GetUserName = GetUserName;
+        service.GetPassword = GetPassword;
 
         return service;
 
@@ -24,6 +26,8 @@
           var decoded = Base64.decode(authdata).split(":");
           var userName = decoded[0];
           var password = decoded[1];
+          $rootScope.username = userName;
+          $rootScope.password = password;
           var token = this.CreateToken(userName,password);
           return token;
         }
@@ -56,6 +60,8 @@
 
 
         function Login(username, password, callback) {
+          $rootScope.username = username;
+          $rootScope.password = password;
           var token = service.CreateAccessToken(username,password);
           var req = {
              method: 'GET',
@@ -80,6 +86,14 @@
                   alert("An error occured while logging in please try again");
                });
 
+        }
+
+        function GetUserName(){
+          return $rootScope.globals.currentUser.username;
+        }
+
+        function GetPassword(){
+          return Base64.decode($rootScope.globals.currentUser.authdata).split(':')[1];
         }
 
         function SetCredentials(username, password) {

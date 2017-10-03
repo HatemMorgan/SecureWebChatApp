@@ -113,8 +113,8 @@ function RSASetPublicKeyParams(N,E)
 
 function RSADoPublic(x)
 {
-  console.log("e = "+ this.e);
-  console.log("n = "+this.n);
+  // console.log("e = "+ this.e);
+  // console.log("n = "+this.n);
     return x.modPowInt(this.e, this.n);
 }
 
@@ -131,9 +131,9 @@ function RSAEncrypt(text)
     if (m == null) return null;
     var c = this.doPublic(m);
     if (c == null) return null;
-    console.log("hereee--> "+ c);
+    // console.log("hereee--> "+ c);
     var h = c.toString(16);
-    console.log("hereee--> "+ h);
+    // console.log("hereee--> "+ h);
     if ((h.length & 1) == 0) return h;
     else return "0" + h;
 }
@@ -352,8 +352,8 @@ function _rsasign_getHexPaddedDigestInfoForString(s, keySize, hashAlg)
 
 function _rsasign_signString(s, hashAlg)
 {
-    console.log("Signature n = "+this.n);
-    console.log("Signature e = "+this.e);
+    // console.log("Signature n = "+this.n);
+    // console.log("Signature e = "+this.e);
 
     // get padding digest of the plaintext
     var hPM = _rsasign_getHexPaddedDigestInfoForString(s, this.n.bitLength(), hashAlg);

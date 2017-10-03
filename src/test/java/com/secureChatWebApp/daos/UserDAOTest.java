@@ -32,7 +32,7 @@ public class UserDAOTest {
 
 	@Test
 	public void testCreateUser() throws DatabaseException {
-		int inserted = userDAO.createUser("test", "2123ejdq124fa32",
+		int inserted = userDAO.createUser("test", "2123ejdq124fa3",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
 
