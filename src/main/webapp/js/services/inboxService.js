@@ -1,4 +1,4 @@
-angular.module('mainApp').factory('inboxService',contactsService);
+angular.module('mainApp').factory('inboxService',inboxService);
 inboxService.$inject = ['$http','$rootScope', 'MainService', 'AuthenticationService'];
 
 function inboxService($http, $rootScope, MainService, AuthenticationService, contactsService){
@@ -16,7 +16,7 @@ function inboxService($http, $rootScope, MainService, AuthenticationService, con
 		var token = AuthenticationService.CreateAccessToken(username,password);
   	var req = {
 				method: 'GET',
-				url: 'rest/contacts',
+				url: 'rest/inbox',
 				headers:
 				{
 					'x-access-token': token
@@ -28,7 +28,9 @@ function inboxService($http, $rootScope, MainService, AuthenticationService, con
 				// callback with true flag indicating that registeration
 				// completed successfully
 				// console.log(response.data.contacts);
-				callback(response.data.contacts);
+        var encryptedInbox = response.data.inbox;
+        console.log(encryptedInbox);
+				callback(encryptedInbox);
 			}else{
 				alert(response);
 				// callback with true flag indicating that registeration
