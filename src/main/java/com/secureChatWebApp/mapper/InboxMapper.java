@@ -15,6 +15,7 @@ public class InboxMapper implements RowMapper<Inbox> {
 		inbox.setSender(rs.getString("sender"));
 		inbox.setMessage(rs.getString("text"));
 		inbox.setTimestamp(rs.getString("timeStamp"));
+		inbox.setEncryptedChatKey(rs.getString("encryptedChatKey"));
 		return inbox;
 	}
 

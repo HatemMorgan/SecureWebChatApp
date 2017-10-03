@@ -41,10 +41,17 @@ public class MessageDAO extends JdbcDaoSupport {
 	}
 
 	public List<Inbox> getUserInbox(String userName) throws DatabaseException {
-		String SQL = "SELECT sender,text,timeStamp " + "FROM messages " + "Where id in " + "(SELECT MAX(id)"
-				+ "	FROM messages" + "	WHERE receiver = ? and delivered = 0 " + "	GROUP BY sender )";
+		String SQL = "SELECT m.sender,m.text,m.timeStamp,c.encrypted_key AS encryptedChatKey " 
+						+ "FROM messages m INNER JOIN chat c "
+						+"on m.sender=c.user2 and m.receiver = c.user1 "
+						+ "Where m.receiver = ? AND m.id in " 
+							+ "(SELECT MAX(m2.id) "
+							+ "FROM messages m2 " 
+							+ "WHERE m2.receiver = ? and m2.delivered = 0 " 
+							+ "GROUP BY m2.sender) "
+							+ "ORDER BY m.id DESC";
 		try {
-			List<Inbox> inbox = this.getJdbcTemplate().query(SQL, new Object[] { userName }, new InboxMapper());
+			List<Inbox> inbox = this.getJdbcTemplate().query(SQL, new Object[] {userName, userName }, new InboxMapper());
 			return inbox;
 		} catch (EmptyResultDataAccessException ex) {
 			throw new DatabaseException("No messages added yet");

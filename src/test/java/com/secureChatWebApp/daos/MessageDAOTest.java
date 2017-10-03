@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.activity.InvalidActivityException;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.After;
 import org.junit.Before;
@@ -19,7 +21,8 @@ import com.secureChatWebApp.models.Message;
 public class MessageDAOTest {
 	UserDAO userDAO;
 	MessageDAO messageDAO;
-
+	ChatDAO chatDAO;
+	
 	@Before
 	public void setup() throws IOException {
 		Properties properties = new Properties();
@@ -33,6 +36,7 @@ public class MessageDAOTest {
 
 		userDAO = new UserDAO(dataSource);
 		messageDAO = new MessageDAO(dataSource);
+		chatDAO = new ChatDAO(dataSource);
 	}
 
 	@Test
@@ -146,7 +150,7 @@ public class MessageDAOTest {
 	}
 
 	@Test
-	public void testGetInbox() throws DatabaseException, InterruptedException {
+	public void testGetInbox() throws DatabaseException, InterruptedException, InvalidActivityException {
 		userDAO.createUser("test1", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -158,6 +162,9 @@ public class MessageDAOTest {
 		userDAO.createUser("test3", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
+		
+		chatDAO.create("test1", "test2","BDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6");
+		chatDAO.create("test1", "test3","yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSasasdejoirwf57qwe5dd");
 
 		messageDAO.createMessage("test1", "test2", "PTKZ7aGJ74EAmHGwTW0+EiT22LVQtscoRk7rxVfMNVk=");
 		Thread.sleep(1000);
@@ -173,19 +180,27 @@ public class MessageDAOTest {
 
 		messageDAO.createMessage("test3", "test1", "oiddsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=");
 		messageDAO.createMessage("test3", "test1", "sdddadsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=");
+		messageDAO.createMessage("test2", "test1", "21sdddadsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=");
 
 		List<Inbox> inbox = messageDAO.getUserInbox("test1");
 
-		assertEquals("Failure,Wrong Inbox fetched", "test3", inbox.get(1).getSender());
-		assertEquals("Failure,Wrong Inbox fetched", "sdddadsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=",
+		assertEquals("Failure,Wrong Inbox Sender fetched", "test3", inbox.get(1).getSender());
+		assertEquals("Failure,Wrong Inbox message fetched", "sdddadsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=",
 				inbox.get(1).getMessage());
+		assertEquals("Failure,Wrong Inbox encryptedChatKey fetched", "yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSasasdejoirwf57qwe5dd",
+				inbox.get(1).getEncryptedChatKey());
 		
-		assertEquals("Failure,Wrong Inbox fetched", "test2", inbox.get(0).getSender());
-		assertEquals("Failure,Wrong Inbox fetched", "asdadsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=",
+		assertEquals("Failure,Wrong Inbox Sender fetched","test2" ,inbox.get(0).getSender());
+		assertEquals("Failure,Wrong Inbox message fetched", "21sdddadsdEAasadawTW0+EiT22LVQscoRk7rxVasdasdk=",
 				inbox.get(0).getMessage());
+		assertEquals("Failure,Wrong Inbox encryptedChatKey fetched", "BDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6",
+				inbox.get(0).getEncryptedChatKey());
 
 		messageDAO.deleteMessage("test1", "test2");
 		messageDAO.deleteMessage("test1", "test3");
+		chatDAO.deleteChat("test1", "test2");
+		chatDAO.deleteChat("test1", "test3");	
+
 		userDAO.deleteUser("test3");
 	}
 

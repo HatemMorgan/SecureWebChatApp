@@ -5,7 +5,8 @@ public class Inbox {
 	private String sender;
 	private String message;
 	private String timestamp;
-
+	private String encryptedChatKey;
+	
 	public String getSender() {
 		return sender;
 	}
@@ -30,9 +31,20 @@ public class Inbox {
 		this.timestamp = timestamp;
 	}
 
+	public String getEncryptedChatKey() {
+		return encryptedChatKey;
+	}
+
+	public void setEncryptedChatKey(String encryptedChatKey) {
+		this.encryptedChatKey = encryptedChatKey;
+	}
+
 	@Override
 	public String toString() {
-		return "Inbox [sender=" + sender + ", message=" + message + ", timestamp=" + timestamp + "]";
+		return "Inbox [sender=" + sender + ", message=" + message + ", timestamp=" + timestamp + ", encryptedChatKey="
+				+ encryptedChatKey + "]";
 	}
+
+	
 
 }
