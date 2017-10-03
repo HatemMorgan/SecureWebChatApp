@@ -38,22 +38,22 @@ public class ContactsController {
 		 * load attributes set in the Security intercepter to check if the user
 		 * is valid and authenticated
 		 */
-		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
-		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
-
+		Boolean isAuthenticated = (Boolean) request.getAttribute("isAuthenticated");
+		Boolean isValidUser = (Boolean) request.getAttribute("isValidUser");
+		
 		// get startTime added by Security intercepter
-		long startTime = (long) request.getAttribute("startTime");
+		Long startTime = (Long) request.getAttribute("startTime");
 
 		// get userName from added by Security intercepter from access token
 		String userName = (String) request.getAttribute("userName");
 		
 		// response JSON
-		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<String, Object>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
-		if (!isValidUser) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		if (!isValidUser.booleanValue()) {
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Contacts");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -62,8 +62,8 @@ public class ContactsController {
 
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
-		if (!isAuthenticated) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		if (!isAuthenticated.booleanValue()) {
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Contacts");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
@@ -73,7 +73,7 @@ public class ContactsController {
 
 		// if user is authenticated and valid then get contacts and send success
 		// response
-		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 		responseJSON.put("domain", "Contacts");
 		responseJSON.put("timeTaken", timeTaken + " seconds");
 		responseJSON.putAll(contactsService.getContacts(userName, offset, limit));
@@ -88,19 +88,19 @@ public class ContactsController {
 		 * load attributes set in the Security intercepter to check if the user
 		 * is valid and authenticated
 		 */
-		boolean isAuthenticated = (boolean) request.getAttribute("isAuthenticated");
-		boolean isValidUser = (boolean) request.getAttribute("isValidUser");
+		Boolean isAuthenticated = (Boolean) request.getAttribute("isAuthenticated");
+		Boolean isValidUser = (Boolean) request.getAttribute("isValidUser");
 
 		// get startTime added by Security intercepter
-		long startTime = (long) request.getAttribute("startTime");
+		Long startTime = (Long) request.getAttribute("startTime");
 
 		// response JSON
-		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<String, Object>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
-		if (!isValidUser) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		if (!isValidUser.booleanValue()) {
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Contacts");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
@@ -109,8 +109,8 @@ public class ContactsController {
 
 		// if user is not authenticated return error response message
 		// with UNAUTHORIZED status code (401)
-		if (!isAuthenticated) {
-			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		if (!isAuthenticated.booleanValue()) {
+			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Contacts");
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
@@ -120,7 +120,7 @@ public class ContactsController {
 
 		// if user is authenticated and valid then get contact's public keys and
 		// send success response
-		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
+		double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 		responseJSON.put("domain", "Contacts");
 		responseJSON.put("timeTaken", timeTaken + " seconds");
 		responseJSON.putAll(contactsService.getContactPubKeys(contactName));

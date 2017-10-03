@@ -75,21 +75,22 @@ public class RegisterationControllerTest {
 		Map<String, String> map = mapper.readValue(json, new TypeReference<Map<String, String>>() {
 		});
 		// System.out.println(map);
-		String[] pubKeyEnc = map.get("encryptionPubKey").split(":");
+		String pubKeyEnc = map.get("encryptionPubKey");
 
-		PublicKey pubKey = RSAUtility.reConstructPublicKey(new BigInteger(pubKeyEnc[0], 16),
-				new BigInteger(pubKeyEnc[1], 16));
+		PublicKey pubKey = RSAUtility.reConstructPublicKey(pubKeyEnc);
 
 		// create a new client
 		String userName = "test123";
 		String hashedPassword = HashUtility.hashSHA1("1234");
 
 		RSAPublicKey rsaEncPubKey = ((RSAPublicKey) RSAUtility.generatetKeyPair().getPublic());
-		String encPubKeyStr = rsaEncPubKey.getModulus() + ":" + rsaEncPubKey.getPublicExponent();
+		// key parameters must be sent in hexadecimal format
+		String encPubKeyStr = String.format("%040x", rsaEncPubKey.getModulus()) + ":" + String.format("%040x", rsaEncPubKey.getPublicExponent());
 
 		KeyPair rsaSignKeyPair = RSAUtility.generatetKeyPair();
 		RSAPublicKey rsaSignPubKey = ((RSAPublicKey) rsaSignKeyPair.getPublic());
-		String signPubKeyStr = rsaSignPubKey.getModulus() + ":" + rsaSignPubKey.getPublicExponent();
+		// key parameters must be sent in hexadecimal format
+		String signPubKeyStr =  String.format("%040x", rsaSignPubKey.getModulus()) + ":" + String.format("%040x", rsaSignPubKey.getPublicExponent());
 
 		String data = hashedPassword;
 

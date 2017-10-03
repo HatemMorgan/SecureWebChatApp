@@ -1,23 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Bootstrap Core CSS -->
-  	<!-- <link href="../assets/css/bootstrap.css" rel="stylesheet"> -->
+<!-- Bootstrap Core CSS -->
+<!-- <link href="../assets/css/bootstrap.css" rel="stylesheet"> -->
 
-   <!-- Custom CSS -->
-    <!-- <link href="../assets/css/custom.css" rel="stylesheet"> -->
+<!-- Custom CSS -->
+<!-- <link href="../assets/css/custom.css" rel="stylesheet"> -->
 
 
 </head>
 <body ng-controller="homeController">
-	<div style="width:100%; height:30%; position:centre; vertical-align:middle; text-align:center; color:#FFFFFF; margin-bottom:7%; margin-top:10%">
-		<h1> Welcome to our Messaging System! </h1>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-href="#!/home">SecureWebChatApp</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a ng-href="#!/home">Home</a></li>
+				<li><a ng-href="#!/inbox">Inbox</a></li>
+				<li><a ng-href="#!/contacts">Chat</a></li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<div class="jumbotron">
+		<div class="container">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div
+					style="width: 100%; height: 30%; position: centre; vertical-align: middle; text-align: center; color: #FFFFFF; margin-bottom: 7%; margin-top: 10%">
+					<h1>Welcome to our Messaging System!</h1>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div style="width:120px; height:100%; position:centre; vertical-align:middle; text-align:center; margin-left:45%">
+	</div>
+	<!-- <div style="width:120px; height:100%; position:centre; vertical-align:middle; text-align:center; margin-left:45%">
 		<button type="button" class="btn" style="width:120px; margin-bottom: 3%; font-weight:bold" ng-click="login()"> Login </button>
 		<button type="button" class="btn-info" style="width: 120px; height: 32px; font-weight:bold" ng-click="register()"> Register </button>
 
-	</div>
+	</div> -->
 
 </body>
 </html>

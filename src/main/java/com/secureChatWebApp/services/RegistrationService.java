@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.secureChatWebApp.daos.UserDAO;
+import com.secureChatWebApp.exceptions.DatabaseException;
 import com.secureChatWebApp.exceptions.RequestException;
 import com.secureChatWebApp.models.ServerKeyPairs;
 import com.secureChatWebApp.utilites.RSAUtility;
@@ -68,12 +69,16 @@ public class RegistrationService {
 
 				} else {
 
-					boolean registered = registerNewUser(s);
+					try {
+						boolean registered = registerNewUser(s);
 
-					// user was not inserted into database
-					if (!registered)
-						throw new RequestException(
-								"Cannot insert new user. Please report this problem and try registering again");
+						// user was not inserted into database
+						if (!registered)
+							throw new RequestException(
+									"Cannot insert new user. Please report this problem and try registering again");
+					} catch (DatabaseException e) {
+						throw new RequestException(e.getMessage());
+					}
 
 				}
 			}
@@ -91,8 +96,9 @@ public class RegistrationService {
 	 * @param s
 	 *            {userName}:{hashPassword}:{encPubKey}:{signPubKey}
 	 * @return
+	 * @throws DatabaseException
 	 */
-	private boolean registerNewUser(String[] s) {
+	private boolean registerNewUser(String[] s) throws DatabaseException {
 
 		int inserted = userDAO.createUser(s[0], s[1], s[2], s[3]);
 		return inserted == 1 ? true : false;

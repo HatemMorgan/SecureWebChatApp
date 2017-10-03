@@ -1,6 +1,5 @@
 package com.secureChatWebApp.controllers;
 
-import java.util.Hashtable;
 import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class RegisterationController {
 	public ResponseEntity<LinkedHashMap<String, String>> register(
 			@RequestBody LinkedHashMap<String, String> requestBody) {
 		long startTime = System.currentTimeMillis();
-		LinkedHashMap<String, String> json = new LinkedHashMap<>();
+		LinkedHashMap<String, String> json = new LinkedHashMap<String, String>();
 		try {
 
 			registrationService.register(requestBody.get("data"));
@@ -36,6 +35,7 @@ public class RegisterationController {
 			return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.OK);
 
 		} catch (RequestException e) {
+			System.out.println(e.toString());
 			/*
 			 * RequestException(custom exception) thrown if request validation
 			 * failed or request body was corrupted
@@ -46,7 +46,7 @@ public class RegisterationController {
 			json.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 			// other exceptions not handled by service thrown and send
 			// INTERNAL_SERVER_ERROR status code (500)
 			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);

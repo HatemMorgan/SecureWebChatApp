@@ -1,7 +1,5 @@
 package com.secureChatWebApp.models;
 
-import java.sql.Timestamp;
-
 
 public class Message {
 	int id;
@@ -10,15 +8,7 @@ public class Message {
 	String text;
 	boolean sent;
 	boolean delivered;
-	Timestamp timestamp;
-
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
-	}
+	String timestamp;
 
 	public int getId() {
 		return id;
@@ -68,10 +58,18 @@ public class Message {
 		this.delivered = delivered;
 	}
 
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	@Override
 	public String toString() {
 		return "Message [id=" + id + ", sender=" + sender + ", receiver=" + receiver + ", text=" + text + ", sent="
-				+ sent + ", delivered=" + delivered + "]";
+				+ sent + ", delivered=" + delivered + ", timestamp=" + timestamp + "]";
 	}
 
 }

@@ -77,9 +77,10 @@ public class UserRestService {
 	}
 
 	public static void main(String[] args) throws Exception {
-		BigInteger modulus = new BigInteger(
-				"9579395940609983593307985278396088956051575943622517115758142329514659049231799125540545342549638974014020899333615940728093556477765550635369547517163601");
-		BigInteger exponent = new BigInteger("3");
+		String x = "8f36852ff23ba77b7043d9a8bef6e2b0f93c3eae00b79e0a417e864e736623c04543194fa7f2755626774041fae2981d78375f7034c8169655d078825d9e00ef";
+		
+		BigInteger modulus = new BigInteger(x,16);
+		BigInteger exponent = new BigInteger("3",16);
 		RSAPublicKeySpec spec = new RSAPublicKeySpec(modulus, exponent);
 		KeyFactory factory = KeyFactory.getInstance("RSA");
 		PublicKey pub = factory.generatePublic(spec);

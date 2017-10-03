@@ -39,6 +39,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secureChatWebApp.configs.AppConfig;
 import com.secureChatWebApp.daos.UserDAO;
+import com.secureChatWebApp.exceptions.DatabaseException;
 import com.secureChatWebApp.models.User;
 import com.secureChatWebApp.utilites.HashUtility;
 import com.secureChatWebApp.utilites.RSAUtility;
@@ -233,9 +234,10 @@ public class ContactsControllerTest {
 
 	/**
 	 * Create some users and add them to database in order to fetch
+	 * @throws DatabaseException 
 	 */
-	private List<String> addSomeUsers() {
-		List<String> users = new ArrayList<>();
+	private List<String> addSomeUsers() throws DatabaseException {
+		List<String> users = new ArrayList<String>();
 		userDAO.createUser("test", "2123ejdq124fa32",
 				"KeyiOAhUg+yy2fVcCxeBDFwMPA1y5mIzSwj3UMiyuWQ3YmBJqqPSgNSnRmx+VXu/nhuNzGVC8gczZXy3HtP6IpFtQ==",
 				"Keytuccq/Y0hfqtxyxtQ0d7MCLikeO5yyoAC0yAoMsHLl5ElRfiIX5HRdTYS4MC92iYVAwVnB0lDgSPLhVWttR4UQ==");
@@ -305,11 +307,13 @@ public class ContactsControllerTest {
 		String hashedPassword = HashUtility.hashSHA1("1234");
 
 		RSAPublicKey rsaEncPubKey = ((RSAPublicKey) RSAUtility.generatetKeyPair().getPublic());
-		String encPubKeyStr = rsaEncPubKey.getModulus() + ":" + rsaEncPubKey.getPublicExponent();
+		// key parameters must be sent in hexadecimal format
+		String encPubKeyStr = String.format("%040x", rsaEncPubKey.getModulus()) + ":" + String.format("%040x", rsaEncPubKey.getPublicExponent());
 
 		KeyPair rsaSignKeyPair = RSAUtility.generatetKeyPair();
 		RSAPublicKey rsaSignPubKey = ((RSAPublicKey) rsaSignKeyPair.getPublic());
-		String signPubKeyStr = rsaSignPubKey.getModulus() + ":" + rsaSignPubKey.getPublicExponent();
+		// key parameters must be sent in hexadecimal format
+		String signPubKeyStr =  String.format("%040x", rsaSignPubKey.getModulus()) + ":" + String.format("%040x", rsaSignPubKey.getPublicExponent());
 
 		String data = hashedPassword;
 

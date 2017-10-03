@@ -1,4 +1,4 @@
-app.controller('ClientController',function($scope){
+angular.module('mainApp').controller('ClientController',function($scope){
 console.log("clientController");
 var userName1 = "RaniaWael";
 var password1= "1234";
@@ -77,4 +77,20 @@ console.log(hash.length);
 console.log(hash);
 
 
+var testRSAKey = cryptico.generateRSAKey("test"+"?"+"1234", 512);
+console.log(testRSAKey.n+"");
+console.log(cryptico.publicKeyString(testRSAKey));
+var testPubKey = cryptico.getPubKey(testRSAKey).split(":");
+console.log(testPubKey);
+var testN = testPubKey[0];
+var teste = testPubKey[1];
+// console.log(teste);
+// console.log(Number(teste).toString(16));
+var testConstructedPubKey = cryptico.generateRSAKey("xx", 512);
+cryptico.setPublicKey(testConstructedPubKey,testN,teste);
+console.log(cryptico.publicKeyString(testConstructedPubKey));
+
+var testCipher = "DeHDOfifP+y9RgcA4Loc2dm1mhoDrDTLKrykSbbidUvPkFrRN/J98CUrv9TJfZZlUVwpII1qQORuJy9Ah4pz2A==";
+var testPlain = cryptico.RSADecrypt(testCipher,testRSAKey);
+console.log(testPlain);
 });

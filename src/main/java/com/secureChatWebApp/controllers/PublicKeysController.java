@@ -26,7 +26,7 @@ public class PublicKeysController {
 	public ResponseEntity<LinkedHashMap<String, String>> getEncryptionPublicKey() {
 		long startTime = System.currentTimeMillis();
 
-		LinkedHashMap<String, String> json = new LinkedHashMap<>();
+		LinkedHashMap<String, String> json = new LinkedHashMap<String, String>();
 		json.put("encryptionPubKey", publicKeysService.getEncryptionPublicKey());
 
 		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
@@ -39,7 +39,7 @@ public class PublicKeysController {
 	public ResponseEntity<LinkedHashMap<String, String>> getSignaturePublicKey() {
 		long startTime = System.currentTimeMillis();
 
-		LinkedHashMap<String, String> json = new LinkedHashMap<>();
+		LinkedHashMap<String, String> json = new LinkedHashMap<String, String>();
 		json.put("signaturePubKey", publicKeysService.getSignaturePublicKey());
 
 		double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
@@ -52,7 +52,7 @@ public class PublicKeysController {
 	public ResponseEntity<LinkedHashMap<String, String>> getServerPublicKey() {
 		long startTime = System.currentTimeMillis();
 
-		LinkedHashMap<String, String> json = new LinkedHashMap<>();
+		LinkedHashMap<String, String> json = new LinkedHashMap<String, String>();
 		json.put("encryptionPubKey", publicKeysService.getEncryptionPublicKey());
 		json.put("signaturePubKey", publicKeysService.getSignaturePublicKey());
 

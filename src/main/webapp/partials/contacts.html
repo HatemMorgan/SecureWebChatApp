@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>Contacts</title>
+
+<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" /> -->
+<!-- <link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/chat.css" rel="stylesheet">
+<link href="../css/contacts.css" rel="stylesheet"> -->
+
+<link href="css/chat.css" rel="stylesheet">
+<link href="css/contacts.css" rel="stylesheet">
+<style type="text/css">
+#messages {
+	border: 1px solid #999;
+	padding: 0.5em;
+	margin: 1em 0;
+	height: 20em;
+	overflow: auto;
+}
+
+.first-column {
+  width: 40%;
+	margin-left: 8%;
+  float: left;
+}
+
+.second-column {
+  width: 40%;
+	margin-right: 8%;
+  float: right;
+}
+[scroll-glue-top],
+[scroll-glue-bottom],
+[scroll-glue]{
+	height: 700px;
+	overflow-y: scroll;
+	border: 1px solid gray;
+}
+
+[scroll-glue-left],
+[scroll-glue-right]{
+	width: 100px;
+	overflow-x: scroll;
+	border: 1px solid gray;
+	padding: 10px;
+}
+
+[scroll-glue-left] span,
+[scroll-glue-right] span{
+	border: 1px solid black;
+}
+</style>
+<!-- <script>
+console.log("heree");
+console.log($("#scroll")[0].scrollHeight);
+	$("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+</script> -->
+</head>
+<body ng-controller="contactsController">
+	<!-- <div class="modal-body row"> -->
+		<div class="first-column">
+			<!-- Your first column here -->
+			<input type="text" id="myInput" onkeyup="myFunction()"
+				placeholder="Search for names..">
+
+			<table id="myTable">
+				<tr class="header">
+					<th style="width: 40%;">Picture</th>
+					<th style="width: 60%;">Name</th>
+				</tr>
+				<tr ng-repeat="x in names" ng-click="beginChat(x)">
+					<td>	<img src="assets/no_profile_img.jpg" alt="" width="32" height="32"></td>
+					<td>{{x}}</td>
+				</tr>
+			</table>
+
+		</div>
+		<div class="second-column">
+			<!-- Your second column here -->
+			<div id="live-chat">
+
+				<header class="clearfix">
+
+					<a href="#" class="chat-close">x</a>
+
+					<h4>{{receiver}}</h4>
+
+					<span class="chat-message-counter">3</span>
+
+				</header>
+
+				<div class="chat">
+
+					<div  scroll-glue class="chat-history"  id="scroll">
+
+						<div ng-repeat="m in messages">
+							<div class="chat-message clearfix" >
+
+								<img src="assets/no_profile_img.jpg" alt="" width="32"
+									height="32">
+
+								<div class="chat-message-content clearfix">
+
+									<span class="chat-time">{{m.timestamp}}</span>
+
+									<h5>{{m.sender}}</h5>
+
+									<p>{{m.text}}</p>
+
+								</div>
+								<!-- end chat-message-content -->
+							</div>
+							<!-- end chat-message -->
+
+							<hr>
+					</div>
+
+
+
+
+</div>
+					<!-- end chat-history -->
+
+					<!-- <p class="chat-feedback">Your partner is typing…</p> -->
+
+					<!-- <form method="post"> -->
+
+            <div class="form-horizontal">
+    <div class="form-group">
+      <div class="col-xs-10">
+        <textarea class="form-control input-sm" rows="3" style="resize: none" ng-model="message"   placeholder="Type your message…" autofocus></textarea>
+      </div>
+      <div class="col-xs-2">
+
+        <!-- <button class="btn uk-button btn-block btn-default " ng-click="viewServiceNowPopup(formData_EventDetails)"> &nbsp;View &nbsp;</button> -->
+        <button class="btn uk-button btn-block btn-success " style="margin-top:10%" ng-click="sendMessage()">Send </button>
+
+      </div>
+
+    </div>
+  </div>
+						<!-- <fieldset>
+
+							<textarea class="form-control" style="   width: 70%;"   type="text" placeholder="Type your message…" autofocus></textarea>
+              <button type="button"   class="btn btn-success">send</button>
+					 </fieldset> -->
+
+					<!-- </form> -->
+
+				</div>
+				<!-- end chat -->
+
+			</div>
+			<!-- end live-chat -->
+
+
+		</div>
+	<!-- </div> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script> -->
+
+
+</body>
+</html>

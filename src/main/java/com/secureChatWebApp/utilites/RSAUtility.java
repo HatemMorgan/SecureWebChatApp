@@ -91,7 +91,7 @@ public class RSAUtility {
 	public static PublicKey reConstructPublicKey(String encryptionPubKeyString)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		String[] params = encryptionPubKeyString.split(":");
-		return reConstructPublicKey(new BigInteger(params[0]), new BigInteger(params[1]));
+		return reConstructPublicKey(new BigInteger(params[0],16), new BigInteger(params[1],16));
 	}
 
 	/**
@@ -141,10 +141,9 @@ public class RSAUtility {
 	 * @throws NoSuchAlgorithmException
 	 */
 	public static boolean checkIfPublicKeyValid(String pubKeyStr) throws NoSuchAlgorithmException {
-		String[] params = pubKeyStr.split(":");
 
 		try {
-			reConstructPublicKey(new BigInteger(params[0]), new BigInteger(params[1]));
+			reConstructPublicKey(pubKeyStr);
 			return true;
 
 		} catch (InvalidKeySpecException e) {

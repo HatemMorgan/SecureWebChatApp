@@ -1,0 +1,246 @@
+<html>
+<head>
+<link href="css/chat.css" rel="stylesheet">
+
+<style type="text/css">
+body {
+	margin-top: 50px;
+}
+
+.nav-tabs
+
+.glyphicon
+:not
+
+(
+.no-margin
+
+)
+{
+margin-right
+:
+
+10
+px
+;
+
+
+}
+.tab-pane .list-group-item:first-child {
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+.tab-pane .list-group-item:last-child {
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.tab-pane .list-group .checkbox {
+	display: inline-block;
+	margin: 0px;
+}
+
+.tab-pane .list-group .glyphicon {
+	margin-right: 5px;
+}
+
+.tab-pane .list-group .glyphicon:hover {
+	color: #FFBC00;
+}
+/*a.list-group-item.read { color: #222;background-color: #F3F3F3; }*/
+hr {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.nav-pills>li>a {
+	padding: 5px 10px;
+}
+
+.ad {
+	padding: 5px;
+	background: #F5F5F5;
+	color: #222;
+	font-size: 80%;
+	border: 1px solid #E5E5E5;
+}
+
+.ad a.title {
+	color: #15C;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 110%;
+}
+
+.ad a.url {
+	color: #093;
+	text-decoration: none;
+}
+
+.first-column {
+	width: 50%;
+	margin-left: 5%;
+	float: left;
+}
+
+.second-column {
+	width: 40%;
+	/*margin-right: 8%;*/
+	float: right;
+}
+
+[scroll-glue-top], [scroll-glue-bottom], [scroll-glue] {
+	height: 700px;
+	overflow-y: scroll;
+	border: 1px solid gray;
+}
+
+[scroll-glue-left], [scroll-glue-right] {
+	width: 100px;
+	overflow-x: scroll;
+	border: 1px solid gray;
+	padding: 10px;
+}
+
+[scroll-glue-left] span, [scroll-glue-right] span {
+	border: 1px solid black;
+}
+</style>
+
+</head>
+<body ng-controller="inboxController">
+	<div class="first-column" class="container">
+		<div class="row">
+
+			<div class="col-sm-9 col-md-10"></div>
+		</div>
+		<hr>
+		<div class="row">
+
+			<div class="col-sm-15 col-md-15">
+
+
+				<div class="tab-content">
+					<div class="tab-pane fade in active" id="home">
+						<div class="list-group">
+
+							<div ng-repeat="x in inbox" >
+								<a ng-click="beginChat(x.sender)" class="list-group-item">
+									<div class="checkbox"></div> <!-- <span class="glyphicon glyphicon-star-empty"></span> -->
+									<!-- <span class="name"
+									style="min-width: 20px; margin-right:10px; margin-top:5px; display: inline-block;"><img src="../assets/no_profile_img.jpg" alt="" width="32" height="32"></span> -->
+									<span class="name"
+									style="min-width: 120px; display: inline-block;">{{x.sender}}</span>
+									<span class="">{{x.message.substr(0,10)}}</span>
+									<span class="text-muted" style="font-size: 11px;">- More content here</span>
+									<span class="badge">{{x.timestamp}}</span>
+									<span	class="pull-right"> <!-- <span class="glyphicon glyphicon-paperclip"> -->
+								</span></span>
+									<div class="checkbox"></div>
+								</a>
+							</div>
+								<!-- <span class="name"
+								style="min-width: 120px; display: inline-block;">Mark
+									Otto</span> <span class="">Nice work on the lastest version</span> <span
+								class="text-muted" style="font-size: 11px;">- More
+									content here</span> <span class="badge">12:10 AM</span> <span
+								class="pull-right"> </span></span>
+							</a><a href="#" class="list-group-item read">
+								<div class="checkbox"></div>
+
+								<span class="name"
+								style="min-width: 120px; display: inline-block;">Jane
+									Patel</span> <span class="">This is big title</span> <span
+								class="text-muted" style="font-size: 11px;">More content
+									here</span> <span class="badge">11:30 PM</span> <span
+								class="pull-right">
+							</span></span>
+							</a> -->
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="second-column">
+		<!-- Your second column here -->
+		<div id="live-chat">
+
+			<header class="clearfix">
+
+				<a href="#" class="chat-close">x</a>
+
+				<h4>{{receiver}}</h4>
+
+				<span class="chat-message-counter">3</span>
+
+			</header>
+
+			<div class="chat">
+
+				<div scroll-glue class="chat-history" id="scroll">
+
+					<div ng-repeat="m in messages">
+						<div class="chat-message clearfix">
+
+							<img src="assets/no_profile_img.jpg" alt="" width="32"
+								height="32">
+
+							<div class="chat-message-content clearfix">
+
+								<span class="chat-time">{{m.timestamp}}</span>
+
+								<h5>{{m.sender}}</h5>
+
+								<p>{{m.text}}</p>
+
+							</div>
+							<!-- end chat-message-content -->
+						</div>
+						<!-- end chat-message -->
+
+						<hr>
+					</div>
+
+
+
+
+				</div>
+				<!-- end chat-history -->
+
+				<!-- <p class="chat-feedback">Your partner is typing…</p> -->
+
+				<!-- <form method="post"> -->
+
+				<div class="form-horizontal">
+					<div class="form-group">
+						<div class="col-xs-10">
+							<textarea class="form-control input-sm" rows="3"
+								style="resize: none" ng-model="message"
+								placeholder="Type your message…" autofocus></textarea>
+						</div>
+						<div class="col-xs-2">
+
+							<!-- <button class="btn uk-button btn-block btn-default " ng-click="viewServiceNowPopup(formData_EventDetails)"> &nbsp;View &nbsp;</button> -->
+							<button class="btn uk-button btn-block btn-success "
+								style="margin-top: 10%" ng-click="sendMessage()">Send</button>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<!-- end chat -->
+
+		</div>
+		<!-- end live-chat -->
+
+
+	</div>
+</body>
+</html>

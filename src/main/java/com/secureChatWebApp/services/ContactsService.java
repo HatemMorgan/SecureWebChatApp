@@ -2,14 +2,10 @@ package com.secureChatWebApp.services;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secureChatWebApp.daos.UserDAO;
 import com.secureChatWebApp.models.ServerKeyPairs;
 import com.secureChatWebApp.models.User;
@@ -39,36 +35,36 @@ public class ContactsService {
 	 *         contacts and signature
 	 * @throws Exception
 	 */
-	public LinkedHashMap<String, Object> getContacts(String userName,int offset, int limit) throws Exception {
-		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+	public LinkedHashMap<String, Object> getContacts(String userName, int offset, int limit) throws Exception {
+		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 
-		List<String> contacts = userDAO.getUsers(userName,offset, limit);
+		List<String> contacts = userDAO.getUsers(userName, offset, limit);
 		map.put("contacts", contacts);
 
 		// mapper used to change JSON from java object to string and vice versa
-//		ObjectMapper mapper = new ObjectMapper();
-//
-//		// convert list to string
-//		String contactsStr = mapper.writeValueAsString(contacts);
-//		map.put("contacts", contactsStr);
+		// ObjectMapper mapper = new ObjectMapper();
+		//
+		// // convert list to string
+		// String contactsStr = mapper.writeValueAsString(contacts);
+		// map.put("contacts", contactsStr);
 
 		String signature = SignaturesUtility.performSigning(contacts.toString(),
 				serverKeyPairs.getSignatureKeyPair().getPrivate());
 
-		map.put("signature",signature);
+		map.put("signature", signature);
 		return map;
 	}
-	
+
 	/**
 	 * get Contact's public keys for signatures and encryption
 	 * 
 	 * @param contactName
 	 * @return
 	 */
-	public LinkedHashMap<String, String> getContactPubKeys(String contactName){
+	public LinkedHashMap<String, String> getContactPubKeys(String contactName) {
 		User contact = userDAO.getUser(contactName);
-		LinkedHashMap<String,String> map = new LinkedHashMap<>();
-		map.put("encryptionPubKey",contact.getRsaPubKeyEnc());
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		map.put("encryptionPubKey", contact.getRsaPubKeyEnc());
 		map.put("signaturePubKey", contact.getRsaPubKeySign());
 		return map;
 	}

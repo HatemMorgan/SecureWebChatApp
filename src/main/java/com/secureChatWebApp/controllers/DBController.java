@@ -22,7 +22,7 @@ public class DBController {
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<LinkedHashMap<String, Object>> dumpDB() {
 		long startTime = System.currentTimeMillis();
-		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<String, Object>();
 		try {
 			
 			responseJSON.put("domain", "dbdump");

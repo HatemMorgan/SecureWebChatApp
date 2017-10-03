@@ -215,9 +215,9 @@ var cryptico = (function() {
             aes.Encrypt(tempBlock, exkey);
             encryptedBlocks = encryptedBlocks.concat(tempBlock);
         }
-         console.log("HERE " + encryptedBlocks);
+        //  console.log("HERE " + encryptedBlocks);
         var ciphertext = my.bytes2string(encryptedBlocks);
-        console.log("HERE " + ciphertext);
+        // console.log("HERE " + ciphertext);
 
 
         return my.b256to64(ciphertext)
@@ -298,7 +298,7 @@ var cryptico = (function() {
     {
         var cipherblock = "";
         var aeskey = my.generateAESKey();
-        console.log("AES key: "+aeskey);
+        // console.log("AES key: "+aeskey);
       try
         {
             var publickey = my.publicKeyFromString(publickeystring);
@@ -324,24 +324,26 @@ var cryptico = (function() {
 
     my.RSASign = function(plainText,signKey){
         signString = my.b16to64(signKey.signString(plainText, "sha256"));
-        console.log("Signature---> "+signString);
+        // console.log("Signature---> "+signString);
         return signString;
     }
 
     my.verify = function(plainText,signature,signKey){
       var check = signKey.verifyString(plainText, my.b64to16(signature));
-      console.log("verified = "+check);
+      return check;
+      // console.log("verified = "+check);
     }
 
     my.RSAEncrypt = function(plainText,rsaObj){
           var cipherblock = my.b16to64(rsaObj.encrypt(plainText));
-          console.log("Encrypted ----> "+cipherblock);
+          // console.log("Encrypted ----> "+cipherblock);
           return cipherblock;
     }
 
     my.RSADecrypt = function(ciphertext,key){
       var plainText = key.decrypt(my.b64to16(ciphertext));
-      console.log("Decrypted-----> "+plainText);
+      return plainText;
+      // console.log("Decrypted-----> "+plainText);
     }
 
     my.setPublicKey = function(rsaKey,N,E){
@@ -358,8 +360,16 @@ var cryptico = (function() {
 
     my.getPubKey = function(RSAObj){
       var rsaPubKeyParamsStr = RSAObj.getPubKey();
-      console.log(rsaPubKeyParamsStr);
+      // console.log(rsaPubKeyParamsStr);
       return rsaPubKeyParamsStr;
+    }
+
+    my.AESEncrypt = function(message,aeskey){
+        return my.encryptAESCBC(message, aeskey);
+    }
+
+    my.AESDecrypt = function(encMessage,aeskey){
+      return my.decryptAESCBC(encMessage, aeskey);
     }
 
     // Inputs: ciphertext and RSA object (key)
@@ -373,9 +383,9 @@ var cryptico = (function() {
             return {status: "failure"};
         }
         // convert AES key from string format to bytes format
-        console.log("AES key in string format"+aeskey);
+        // console.log("AES key in string format"+aeskey);
         aeskey = my.string2bytes(aeskey);
-        console.log("AES key in Bytes array format"+aeskey);
+        // console.log("AES key in Bytes array format"+aeskey);
         // ::52cee64bb3a38f6403386519a39ac91c:: will be concatentated to cipher text in encrypt function if signature
         //is requested
         // this split will result in a string array of size 3 where {plaintext,signaturePublicKey,signature}
