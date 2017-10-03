@@ -25,10 +25,31 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
 
 		return $http(req).then(function successCallback(response){
 			if(response){
-				// callback with true flag indicating that registeration
-				// completed successfully
-				// console.log(response.data.contacts);
-				callback(response.data.contacts);
+				var contacts = response.data.contacts;
+				var digest = "[" + contacts.join() + "]";
+
+				MainService.GetServerSignPubKey(function(serverRSASigPubKey){
+					console.log(serverRSASigPubKey);
+					console.log(digest);
+					var keyParams = serverRSASigPubKey.split(":");
+					var n = keyParams[0];
+					var e = keyParams[1];
+
+					RSAKeyPair = cryptico.generateRSAKey("xx", 512);
+					cryptico.setPublicKey(RSAKeyPair,n,e);
+					var verified = cryptico.verify(digest,response.data.signature,RSAKeyPair);
+					console.log(verified);
+				 // if the Signature is verified then return contacts
+					if(verified){
+						callback(contacts);
+					}else{
+						alert("The response is corrupted. Signature is not valid. Please check your internet connection and try again");
+					}
+
+				});
+
+
+
 			}else{
 				alert(response);
 				// callback with true flag indicating that registeration

@@ -58,6 +58,23 @@ console.log($("#scroll")[0].scrollHeight);
 </script> -->
 </head>
 <body ng-controller="contactsController">
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-href="#!/home">SecureWebChatApp</a>
+			</div>
+			<ul class="nav navbar-nav" style="float:left">
+					<li class="active"><a ng-href="#!/home">Home</a></li>
+					<li><a ng-href="#!/inbox">Inbox</a></li>
+					<li><a ng-href="#!/contacts">Chat</a></li>
+			</ul>
+			<ul class="nav navbar-nav" style="float:right">
+				<li><a ng-click="logout()">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+
 	<!-- <div class="modal-body row"> -->
 		<div class="first-column">
 			<!-- Your first column here -->

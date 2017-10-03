@@ -1,7 +1,8 @@
-angular.module('mainApp').controller('contactsController',function($scope, contactsService,chatService){
+angular.module('mainApp').controller('contactsController',function($scope,$location, contactsService,chatService,AuthenticationService){
 	console.log("in Contacts Controller");
 
 	 contactsService.GetContacts(function(contacts){
+		 
 		 	$scope.names = contacts;
 	});
 
@@ -18,6 +19,11 @@ angular.module('mainApp').controller('contactsController',function($scope, conta
 							});
 					}
 			});
+	}
+
+	$scope.logout = function(){
+		AuthenticationService.ClearCredentials();
+		$location.path('/login');
 	}
 
 	$scope.sendMessage = function(){

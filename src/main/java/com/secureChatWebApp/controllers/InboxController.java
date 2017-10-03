@@ -2,6 +2,7 @@ package com.secureChatWebApp.controllers;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,11 +68,11 @@ public class InboxController {
 		try {
 
 			// call chat service to get old messages
-			List<Inbox> inbox = inboxService.getInbox(userName);
+			Map<String, Object> map = inboxService.getInbox(userName);
 
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Inbox");
-			responseJSON.put("inbox", inbox);
+			responseJSON.putAll(map);
 			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.OK);
 

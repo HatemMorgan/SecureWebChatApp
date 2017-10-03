@@ -41,12 +41,12 @@
         }
 
         // return serverEncPubKey if exist. if not load it
-      function GetServerSignPubKey(){
+      function GetServerSignPubKey(cb){
         if(serverSignPubKey){
-          return serverSignPubKey;
+           cb(serverSignPubKey);
         }else{
-          return  getServerPubKey(function(){
-            return serverSignPubKey;
+          getServerPubKey(function(){
+              cb(serverSignPubKey);
           });
         }
       }

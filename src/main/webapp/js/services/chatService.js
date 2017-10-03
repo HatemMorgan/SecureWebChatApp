@@ -15,7 +15,6 @@ function chatService($http, $rootScope, MainService, AuthenticationService, cont
     var username = AuthenticationService.GetUserName();
     var password = AuthenticationService.GetPassword();
     var token = AuthenticationService.CreateAccessToken(username,password);
-
     var req = {
       method: 'GET',
       url: 'rest/contacts/'+receiverName+'/pubKeys',
@@ -27,7 +26,6 @@ function chatService($http, $rootScope, MainService, AuthenticationService, cont
     return $http(req).then(function successCallback(response){
 			if(response){
         var receiverPubKey = response.data.encryptionPubKey.split(":");
-        console.log(receiverPubKey);
         var symmetricKey = cryptico.bytes2string(cryptico.generateAESKey());
 
         var n = receiverPubKey[0];
@@ -87,12 +85,29 @@ function chatService($http, $rootScope, MainService, AuthenticationService, cont
             };
             return $http(req3).then(function successCallback(response){
         			if(response){
-                // console.log(response.data.data);
-                // console.log(response.data.data.split(":")[0]);
-                console.log(senderRSAKey);
-                var chatKey = cryptico.RSADecrypt(response.data.data.split(":")[0], senderRSAKey);
-                // console.log(chatKey);
-        				callback(true, chatKey);
+								var receivedData = response.data.data.split(":");
+								var encryptedChatKey = receivedData[0];
+                var chatKey = cryptico.RSADecrypt(encryptedChatKey, senderRSAKey);
+								var signature = receivedData[1];
+
+								//Verifying the signature
+								MainService.GetServerSignPubKey(function(serverRSASigPubKey){
+									var keyParams = serverRSASigPubKey.split(":");
+									var n = keyParams[0];
+									var e = keyParams[1];
+
+									RSAKeyPair = cryptico.generateRSAKey("xx", 512);
+									cryptico.setPublicKey(RSAKeyPair,n,e);
+									var verified = cryptico.verify(encryptedChatKey,signature,RSAKeyPair);
+								 // if the Signature is verified then return contacts
+									if(verified){
+										callback(true, chatKey);
+									}else{
+										alert("The response is corrupted. Signature is not valid. Please check your internet connection and try again");
+									}
+
+								});
+
         			}else{
         				alert(response);
                 console.log(response);
@@ -147,19 +162,40 @@ function chatService($http, $rootScope, MainService, AuthenticationService, cont
     return $http(req).then(function successCallback(response){
 
 			if(response){
-				// this messages are sorted by id. The most recent message is at the first
-        var mess = response.data.messages;
-				var decryptedMessages = [];
-				// decrypt messages
-        for(var i = 0; i<mess.length; i++){
-					// use push to reverse array to make the most recent messages at the end of chat history in contacts.html
-						mess[i].text = cryptico.AESDecrypt(mess[i].text,aesKey);
-            decryptedMessages.unshift(mess[i]);
-        }
-				// console.log(decryptedMessages);
+				// data = digest+":"+signature
+				// digest = flatened list of messages
+				var data = response.data.signature.split("--");
+
+				//Verifying the signature
+				MainService.GetServerSignPubKey(function(serverRSASigPubKey){
+
+					var keyParams = serverRSASigPubKey.split(":");
+					var n = keyParams[0];
+					var e = keyParams[1];
+
+					RSAKeyPair = cryptico.generateRSAKey("xx", 512);
+					cryptico.setPublicKey(RSAKeyPair,n,e);
+					var verified = cryptico.verify(data[0],data[1],RSAKeyPair);
+
+				 // if the Signature is verified then return messages after decrypting them.
+					if(verified){
+						// this messages are sorted by id. The most recent message is at the first
+						var mess = response.data.messages;
+						var decryptedMessages = [];
+						// decrypt messages
+						for(var i = 0; i<mess.length; i++){
+							// use push to reverse array to make the most recent messages at the end of chat history in contacts.html
+								mess[i].text = cryptico.AESDecrypt(mess[i].text,aesKey);
+								decryptedMessages.unshift(mess[i]);
+						}
+						callback(true,decryptedMessages);
+					}else{
+						alert("The response is corrupted. Signature is not valid. Please check your internet connection and try again");
+					}
+
+				});
 
 
-        callback(true,decryptedMessages);
 			}else{
 				alert(response);
 				callback(false,null);

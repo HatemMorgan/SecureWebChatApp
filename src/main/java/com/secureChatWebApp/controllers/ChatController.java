@@ -2,6 +2,7 @@ package com.secureChatWebApp.controllers;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.activity.InvalidActivityException;
@@ -323,11 +324,11 @@ public class ChatController {
 		try {
 
 			// call chat service to get old messages
-			List<Message> messages = chatService.getOldMessages(senderName, receiverName, offset, limit);
+			Map<String, Object> map = chatService.getOldMessages(senderName, receiverName, offset, limit);
 
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
-			responseJSON.put("messages", messages);
+			responseJSON.putAll(map);
 			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.OK);
 

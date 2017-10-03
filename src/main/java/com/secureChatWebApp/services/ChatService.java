@@ -6,6 +6,7 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.activity.InvalidActivityException;
 
@@ -164,9 +165,20 @@ public class ChatService {
 		}
 	}
 
-	public List<Message> getOldMessages(String senderName, String receiverName, int offset, int limit) throws RequestException {
+	public Map<String, Object> getOldMessages(String senderName, String receiverName, int offset, int limit) throws Exception {
 		try {
-			return messageDAO.getOldMessages(senderName, receiverName, offset, limit);
+			Map<String, Object> map = new LinkedHashMap<>();
+			
+			List<Message> messages = messageDAO.getOldMessages(senderName, receiverName, offset, limit);
+			map.put("messages", messages);
+			
+			String strMessages = messages.toString();
+			String signature = SignaturesUtility.performSigning(strMessages,serverKeyPairs.getSignatureKeyPair().getPrivate());
+			
+			map.put("signature",strMessages+"--"+signature);
+			
+			return map;
+			
 		} catch (DatabaseException e) {
 			throw new RequestException(e.getMessage());
 		}

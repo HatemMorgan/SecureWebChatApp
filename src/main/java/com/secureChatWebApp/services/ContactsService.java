@@ -47,8 +47,7 @@ public class ContactsService {
 		// // convert list to string
 		// String contactsStr = mapper.writeValueAsString(contacts);
 		// map.put("contacts", contactsStr);
-
-		String signature = SignaturesUtility.performSigning(contacts.toString(),
+		String signature = SignaturesUtility.performSigning(contacts.toString().replaceAll(" ", ""),
 				serverKeyPairs.getSignatureKeyPair().getPrivate());
 
 		map.put("signature", signature);

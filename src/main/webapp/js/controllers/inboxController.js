@@ -1,4 +1,4 @@
-angular.module('mainApp').controller('inboxController',function($scope,inboxService,chatService){
+angular.module('mainApp').controller('inboxController',function($scope,$location,inboxService,chatService,AuthenticationService){
 	console.log("in Contacts Controller");
 
 	 inboxService.GetInbox(function(inbox){
@@ -19,6 +19,11 @@ angular.module('mainApp').controller('inboxController',function($scope,inboxServ
 							});
 					}
 			});
+	}
+
+	$scope.logout = function(){
+		AuthenticationService.ClearCredentials();
+		$location.path('/login');
 	}
 
 	$scope.sendMessage = function(){
