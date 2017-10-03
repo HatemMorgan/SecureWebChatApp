@@ -431,11 +431,13 @@ public class ChatControllerTest {
 		String hashedPassword = HashUtility.hashSHA1("1234");
 
 		RSAPublicKey rsaEncPubKey = ((RSAPublicKey) RSAUtility.generatetKeyPair().getPublic());
-		String encPubKeyStr = rsaEncPubKey.getModulus() + ":" + rsaEncPubKey.getPublicExponent();
+		// key parameters must be sent in hexadecimal format
+		String encPubKeyStr = String.format("%040x", rsaEncPubKey.getModulus()) + ":" + String.format("%040x", rsaEncPubKey.getPublicExponent());
 
 		KeyPair rsaSignKeyPair = RSAUtility.generatetKeyPair();
 		RSAPublicKey rsaSignPubKey = ((RSAPublicKey) rsaSignKeyPair.getPublic());
-		String signPubKeyStr = rsaSignPubKey.getModulus() + ":" + rsaSignPubKey.getPublicExponent();
+		// key parameters must be sent in hexadecimal format
+		String signPubKeyStr =  String.format("%040x", rsaSignPubKey.getModulus()) + ":" + String.format("%040x", rsaSignPubKey.getPublicExponent());
 
 		String data = hashedPassword;
 

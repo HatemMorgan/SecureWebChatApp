@@ -193,7 +193,7 @@ public class ChatController {
 	}
 
 	@RequestMapping(value = "/sendMessage", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<LinkedHashMap<String, String>> sendMessage(
+	public ResponseEntity<LinkedHashMap<String, Object>> sendMessage(
 			@RequestParam(value = "receiverName", required = true) String receiverName,
 			@RequestBody LinkedHashMap<String, String> requestBody, HttpServletRequest request) {
 
@@ -211,7 +211,7 @@ public class ChatController {
 		String senderName = (String) request.getAttribute("userName");
 
 		// response JSON
-		LinkedHashMap<String, String> responseJSON = new LinkedHashMap<String, String>();
+		LinkedHashMap<String, Object> responseJSON = new LinkedHashMap<String, Object>();
 
 		// if user is not valid return error response JSON
 		// return a bad request status code (400)
@@ -220,7 +220,7 @@ public class ChatController {
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
-			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.BAD_REQUEST);
 		}
 
 		// if user is not authenticated return error response message
@@ -231,19 +231,20 @@ public class ChatController {
 			responseJSON.put("errMessage", "UnAuthorized user. Could not authenticate user. It may be because "
 					+ "request has delay over 4 minutes so please check your internet connection and check that it is secure to avoid reply attacks.");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
-			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.UNAUTHORIZED);
 		}
 
 		try {
 
 			// call to chat service to add new message to database
-			chatService.addMessage(senderName, receiverName, requestBody);
+			Message insertedMessage = chatService.addMessage(senderName, receiverName, requestBody);
 
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("message", "Message sent successfully");
+			responseJSON.put("insertedMessage",insertedMessage);
 			responseJSON.put("timeTaken", timeTaken + " seconds");
-			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.OK);
+			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.OK);
 
 		} catch (RequestException e) {
 			/*
@@ -254,7 +255,7 @@ public class ChatController {
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", e.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
-			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.BAD_REQUEST);
 
 		} catch (Exception ex) {
 
@@ -264,7 +265,7 @@ public class ChatController {
 			responseJSON.put("domain", "Chat");
 			responseJSON.put("errMessage", ex.getMessage());
 			responseJSON.put("timeTaken", timeTaken + " seconds");
-			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<LinkedHashMap<String, Object>>(responseJSON, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

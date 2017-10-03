@@ -41,13 +41,8 @@ public class MessageDAO extends JdbcDaoSupport {
 	}
 
 	public List<Inbox> getUserInbox(String userName) throws DatabaseException {
-		String SQL = "SELECT sender,text,timeStamp " 
-					+ "FROM messages " 
-					+ "Where id in " 
-							+ "(SELECT MAX(id)"
-							+ "	FROM messages" 
-							+ "	WHERE receiver = ? and delivered = 0 " 
-							+ "	GROUP BY sender )";
+		String SQL = "SELECT sender,text,timeStamp " + "FROM messages " + "Where id in " + "(SELECT MAX(id)"
+				+ "	FROM messages" + "	WHERE receiver = ? and delivered = 0 " + "	GROUP BY sender )";
 		try {
 			List<Inbox> inbox = this.getJdbcTemplate().query(SQL, new Object[] { userName }, new InboxMapper());
 			return inbox;
@@ -56,12 +51,20 @@ public class MessageDAO extends JdbcDaoSupport {
 		}
 	}
 
-	public int createMessage(String sender, String receiver, String text) {
+	public Message createMessage(String sender, String receiver, String text) {
+		Message message = new Message();
+		message.setSender(sender);
+		message.setReceiver(receiver);
+		message.setText(text);
+		message.setTimestamp(getCurrentFromatedUTCDate());
+		message.setSent(true);
+
 		String SQL = "insert into messages(sender,receiver,text,sent,timeStamp) " + "values(?,?,?,1,?)";
 
 		int inserted = this.getJdbcTemplate().update(SQL,
-				new Object[] { sender, receiver, text, getCurrentFromatedUTCDate() });
-		return inserted;
+				new Object[] { sender, receiver, text, message.getTimestamp() });
+
+		return inserted == 1 ? message : null;
 	}
 
 	public List<Message> dumpMessages() throws DatabaseException {

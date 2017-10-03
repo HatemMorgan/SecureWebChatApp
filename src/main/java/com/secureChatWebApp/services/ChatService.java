@@ -132,7 +132,7 @@ public class ChatService {
 
 	}
 
-	public void addMessage(String senderName, String receiverName, LinkedHashMap<String, String> body)
+	public Message addMessage(String senderName, String receiverName, LinkedHashMap<String, String> body)
 			throws InvalidKeyException, NoSuchAlgorithmException, SignatureException, InvalidKeySpecException,
 			RequestException {
 		// get body components
@@ -149,9 +149,11 @@ public class ChatService {
 			throw new RequestException(
 					"Request Body was corrupted so please check your internet connection and try again");
 
-		int inserted = messageDAO.createMessage(senderName, receiverName, encryptedMessage);
-		if (inserted == 0)
+		Message insertedMessage = messageDAO.createMessage(senderName, receiverName, encryptedMessage);
+		if (insertedMessage == null)
 			throw new RequestException("Cannot insert new message. Please report this problem and try again");
+	
+		return insertedMessage;
 	}
 
 	public List<Message> dbDump() throws RequestException {

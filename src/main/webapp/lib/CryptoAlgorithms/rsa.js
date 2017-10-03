@@ -121,8 +121,8 @@ function RSADoPublic(x)
 // Return the PKCS#1 RSA encryption of "text" as an even-length hex string
 
 function getPubKey(){
-  var m = pkcs1pad2("text", (this.n.bitLength() + 7) >> 3);
-  return this.n+":"+this.e;
+  // var m = pkcs1pad2("text", (this.n.bitLength() + 7) >> 3);
+  return this.n.toString(16)+":"+this.e.toString(16);
 }
 
 function RSAEncrypt(text)

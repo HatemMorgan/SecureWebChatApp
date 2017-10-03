@@ -76,7 +76,7 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
         var keyEncByReceiver = cryptico.RSAEncrypt(symmetricKey,receiverRSAKey);
 
         var digest = keyEncBySender + ":" + keyEncByReceiver;
-          console.log(cryptico.getPubKey(AuthenticationService.GetRSASignObj(username,password)));
+          // console.log(cryptico.getPubKey(AuthenticationService.GetRSASignObj(username,password)));
         var signature = cryptico.RSASign(digest,AuthenticationService.GetRSASignObj(username,password));
 
 
@@ -122,11 +122,11 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
             };
             return $http(req3).then(function successCallback(response){
         			if(response){
-                console.log(response.data.data);
+                // console.log(response.data.data);
                 // console.log(response.data.data.split(":")[0]);
                 console.log(senderRSAKey);
                 var chatKey = cryptico.RSADecrypt(response.data.data.split(":")[0], senderRSAKey);
-                console.log(chatKey);
+                // console.log(chatKey);
         				callback(true, chatKey);
         			}else{
         				alert(response);
@@ -182,13 +182,19 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
     return $http(req).then(function successCallback(response){
 
 			if(response){
+				// this messages are sorted by id. The most recent message is at the first
         var mess = response.data.messages;
-
+				var decryptedMessages = [];
+				// decrypt messages
         for(var i = 0; i<mess.length; i++){
-            mess.text = cryptico.AESDecrypt(mess.text,aesKey);
+					// use push to reverse array to make the most recent messages at the end of chat history in contacts.html
+						mess[i].text = cryptico.AESDecrypt(mess[i].text,aesKey);
+            decryptedMessages.unshift(mess[i]);
         }
+				console.log(decryptedMessages);
 
-        callback(true,mess);
+
+        callback(true,decryptedMessages);
 			}else{
 				alert(response);
 				callback(false,null);
@@ -202,7 +208,6 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
   }
 
   function encryptAndSend(newMessage,key, receiverName,callback){
-    console.log(key);
     var username = AuthenticationService.GetUserName();
     var password = AuthenticationService.GetPassword();
     var token = AuthenticationService.CreateAccessToken(username,password);

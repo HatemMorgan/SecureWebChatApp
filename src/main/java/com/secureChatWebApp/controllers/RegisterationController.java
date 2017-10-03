@@ -35,7 +35,7 @@ public class RegisterationController {
 			return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.OK);
 
 		} catch (RequestException e) {
-
+			System.out.println(e.toString());
 			/*
 			 * RequestException(custom exception) thrown if request validation
 			 * failed or request body was corrupted
@@ -46,6 +46,7 @@ public class RegisterationController {
 			json.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, String>>(json, HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			// other exceptions not handled by service thrown and send
 			// INTERNAL_SERVER_ERROR status code (500)
 			double timeTaken = ((System.currentTimeMillis() - startTime) / 1000.0);
