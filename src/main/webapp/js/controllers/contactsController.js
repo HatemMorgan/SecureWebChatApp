@@ -2,7 +2,6 @@ angular.module('mainApp').controller('contactsController',function($scope, conta
 	console.log("in Contacts Controller");
 
 	 contactsService.GetContacts(function(contacts){
-		 console.log(contacts);
 		 	$scope.names = contacts;
 	});
 
@@ -14,7 +13,6 @@ angular.module('mainApp').controller('contactsController',function($scope, conta
 							// messages which will be used by ng-repeat in contacts.html
 							 contactsService.GetMessages($scope.receiver,$scope.chatKey,function(success,messages){
 								 if(success){
-									 console.log(messages);
 									$scope.messages = messages;
 								}
 							});
@@ -23,10 +21,10 @@ angular.module('mainApp').controller('contactsController',function($scope, conta
 	}
 
 	$scope.sendMessage = function(){
-		 contactsService.encryptAndSend($scope.message, $scope.chatKey, $scope.receiver,function(success){
+		 contactsService.encryptAndSend($scope.message, $scope.chatKey, $scope.receiver,function(success,insertedMessage){
 				 if(success){
-					 console.log("Message Sent");
-					 $scope.messages.add($scope.message);
+					 $scope.messages.push(insertedMessage);
+					 $scope.message = "";
 				 }else{
 					 alert("Message was not sent. Please try again");
 				 }

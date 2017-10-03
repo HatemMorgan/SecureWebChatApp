@@ -4,9 +4,12 @@
 
 <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" /> -->
+<!-- <link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/chat.css" rel="stylesheet">
+<link href="../css/contacts.css" rel="stylesheet"> -->
+
 <link href="css/chat.css" rel="stylesheet">
 <link href="css/contacts.css" rel="stylesheet">
-
 <style type="text/css">
 #messages {
 	border: 1px solid #999;
@@ -18,15 +21,41 @@
 
 .first-column {
   width: 40%;
+	margin-left: 8%;
   float: left;
 }
 
 .second-column {
-  width: 59%;
+  width: 40%;
+	margin-right: 8%;
   float: right;
 }
-</style>
+[scroll-glue-top],
+[scroll-glue-bottom],
+[scroll-glue]{
+	height: 700px;
+	overflow-y: scroll;
+	border: 1px solid gray;
+}
 
+[scroll-glue-left],
+[scroll-glue-right]{
+	width: 100px;
+	overflow-x: scroll;
+	border: 1px solid gray;
+	padding: 10px;
+}
+
+[scroll-glue-left] span,
+[scroll-glue-right] span{
+	border: 1px solid black;
+}
+</style>
+<!-- <script>
+console.log("heree");
+console.log($("#scroll")[0].scrollHeight);
+	$("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+</script> -->
 </head>
 <body ng-controller="contactsController">
 	<!-- <div class="modal-body row"> -->
@@ -55,7 +84,7 @@
 
 					<a href="#" class="chat-close">x</a>
 
-					<h4>{{receiverName}}</h4>
+					<h4>{{receiver}}</h4>
 
 					<span class="chat-message-counter">3</span>
 
@@ -63,7 +92,7 @@
 
 				<div class="chat">
 
-					<div class="chat-history" id="scroll">
+					<div  scroll-glue class="chat-history"  id="scroll">
 
 						<div ng-repeat="m in messages">
 							<div class="chat-message clearfix" >
@@ -81,7 +110,6 @@
 
 								</div>
 								<!-- end chat-message-content -->
-
 							</div>
 							<!-- end chat-message -->
 
@@ -89,7 +117,9 @@
 					</div>
 
 
-					</div>
+
+
+</div>
 					<!-- end chat-history -->
 
 					<!-- <p class="chat-feedback">Your partner is typing…</p> -->
@@ -128,9 +158,7 @@
 		</div>
 	<!-- </div> -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script> -->
-	<script>
-		$("#scroll").scrollTop($("#scroll")[0].scrollHeight);
-	</script>
+
 
 </body>
 </html>

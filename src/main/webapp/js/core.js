@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-var app = angular.module('mainApp', ['ngRoute', 'ngCookies']);
+var app = angular.module('mainApp', ['ngRoute', 'ngCookies','luegg.directives']);
 console.log(app);
 /**
  * Angular Routes
@@ -54,7 +54,6 @@ run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
 	 function run($rootScope, $location, $cookies, $http) {
 			 // keep user logged in after page refresh
        if( $cookies.getObject('globals')){
-         console.log("home");
 			      $rootScope.globals = $cookies.getObject('globals') || {};
             $location.path('/home');
      }

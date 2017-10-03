@@ -191,7 +191,7 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
 						mess[i].text = cryptico.AESDecrypt(mess[i].text,aesKey);
             decryptedMessages.unshift(mess[i]);
         }
-				console.log(decryptedMessages);
+				// console.log(decryptedMessages);
 
 
         callback(true,decryptedMessages);
@@ -228,15 +228,17 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
     };
     return $http(req).then(function successCallback(response){
 			if(response){
-				callback(true);
+				var insertedMessage = response.data.insertedMessage;
+				insertedMessage.text = newMessage;
+				callback(true,insertedMessage);
 			}else{
 				alert(response);
-				callback(false);
+				callback(false,null);
 			}
 		},
 		function errorCallback(response) {
 			alert(response);
-			callback(false);
+			callback(false,null);
 		});
 
   }
