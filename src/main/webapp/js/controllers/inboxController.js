@@ -2,4 +2,6 @@ angular.module('mainApp').controller('inboxController',function($scope,$location
 
 console.log("In Inbox Controller");
 
+  
+
 });

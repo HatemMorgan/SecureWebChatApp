@@ -1,16 +1,16 @@
-angular.module('mainApp').factory('contactsService',contactsService);
-contactsService.$inject = ['$http','$rootScope', 'MainService', 'AuthenticationService'];
+angular.module('mainApp').factory('inboxService',contactsService);
+inboxService.$inject = ['$http','$rootScope', 'MainService', 'AuthenticationService'];
 
-function contactsService($http, $rootScope, MainService, AuthenticationService, contactsService){
+function inboxService($http, $rootScope, MainService, AuthenticationService, contactsService){
 
 	console.log('in contacts service');
 
 	var service = {};
-	service.GetContacts = GetContacts;
+  service.GetInbox = GetInbox;
 	return service;
 
 
-	function GetContacts(callback){
+	function GetInbox(callback){
     var username = AuthenticationService.GetUserName();
     var password = AuthenticationService.GetPassword();
 		var token = AuthenticationService.CreateAccessToken(username,password);
@@ -42,5 +42,6 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
 			callback(false,response.data);
 		});
 	}
+
 
 }
