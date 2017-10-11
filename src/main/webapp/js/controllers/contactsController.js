@@ -1,8 +1,8 @@
 angular.module('mainApp').controller('contactsController',function($scope,$location, contactsService,chatService,AuthenticationService){
-	console.log("in Contacts Controller");
+	// console.log("in Contacts Controller");
 
 	 contactsService.GetContacts(function(contacts){
-		 
+
 		 	$scope.names = contacts;
 	});
 

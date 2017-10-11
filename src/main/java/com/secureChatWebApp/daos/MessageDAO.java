@@ -94,8 +94,10 @@ public class MessageDAO extends JdbcDaoSupport {
 		try {
 			// default limit 10
 			if (limit == -1) {
+//				String SQL = "select * from messages where ((sender=? and receiver=?) or (receiver=? and sender=?))"
+//						+ "order by id DESC LIMIT 10";
 				String SQL = "select * from messages where ((sender=? and receiver=?) or (receiver=? and sender=?))"
-						+ "order by id DESC LIMIT 10";
+						+ "order by id DESC ";
 				messages = this.getJdbcTemplate().query(SQL, new Object[] { sender, receiver, sender, receiver },
 						new MessageMapper());
 			} else {

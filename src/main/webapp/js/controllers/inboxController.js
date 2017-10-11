@@ -1,8 +1,8 @@
 angular.module('mainApp').controller('inboxController',function($scope,$location,inboxService,chatService,AuthenticationService){
-	console.log("in Contacts Controller");
+	// console.log("in Contacts Controller");
 
 	 inboxService.GetInbox(function(inbox){
-     console.log("heree");
+    //  console.log("heree");
 		 	$scope.inbox = inbox;
 	});
 

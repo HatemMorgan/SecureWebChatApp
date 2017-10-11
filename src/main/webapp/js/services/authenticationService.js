@@ -83,7 +83,7 @@
                    }
                },
                function errorCallback(response) {
-                  alert("An error occured while logging in please try again");
+                  alert(response.data.errMessage);
                });
 
         }

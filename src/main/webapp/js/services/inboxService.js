@@ -3,7 +3,7 @@ inboxService.$inject = ['$http','$rootScope', 'MainService', 'AuthenticationServ
 
 function inboxService($http, $rootScope, MainService, AuthenticationService, contactsService){
 
-	console.log('in contacts service');
+	// console.log('in contacts service');
 
 	var service = {};
   service.GetInbox = GetInbox;
@@ -71,7 +71,7 @@ function inboxService($http, $rootScope, MainService, AuthenticationService, con
 		},
 		function errorCallback(response) {
 			alert(response);
-			console.log(respone.data);
+			// console.log(respone.data);
 			callback(false,response.data);
 		});
 	}

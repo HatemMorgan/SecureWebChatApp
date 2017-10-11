@@ -62,17 +62,17 @@
 
 
              return $http(req).then(function successCallback(response){
-               console.log("here");
+              //  console.log("here");
                    if(response){
-                     console.log(response.data);
+                    //  console.log(response.data);
                      callback(response.data);
                    }else{
                       callback(null);
                    }
                },
                function errorCallback(response) {
-                 console.log("errr heree");
-                  console.log(response.statusText);
+                //  console.log("errr heree");
+                  // console.log(response.statusText);
                   alert("An error occured while logging in please try again");
                });
 

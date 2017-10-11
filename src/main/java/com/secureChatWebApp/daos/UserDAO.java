@@ -56,7 +56,8 @@ public class UserDAO extends JdbcDaoSupport {
 
 		// default limit = 10
 		if (limit == -1) {
-			String SQL = "select user_name from users where user_name != ? order by user_name LIMIT 10 ";
+//			String SQL = "select user_name from users where user_name != ? order by user_name LIMIT 10 ";
+			String SQL = "select user_name from users where user_name != ? order by user_name ";
 			users = this.getJdbcTemplate().queryForList(SQL, new Object[] { userName }, String.class);
 		} else {
 			if (offset == -1) {

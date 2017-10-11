@@ -35,7 +35,7 @@ public class LoginController {
 		if (!isValidUser.booleanValue()) {
 			double timeTaken = ((System.currentTimeMillis() - startTime.longValue()) / 1000.0);
 			responseJSON.put("domain", "Login");
-			responseJSON.put("errMessage", "Invalid User. Register as a new User before login.");
+			responseJSON.put("errMessage", "Invalid userName and/or password");
 			responseJSON.put("timeTaken", timeTaken + " seconds");
 			return new ResponseEntity<LinkedHashMap<String, String>>(responseJSON, HttpStatus.BAD_REQUEST);
 		}

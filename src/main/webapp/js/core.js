@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 var app = angular.module('mainApp', ['ngRoute', 'ngCookies','luegg.directives']);
-console.log(app);
+// console.log(app);
 /**
  * Angular Routes
  */

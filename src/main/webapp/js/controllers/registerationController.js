@@ -1,5 +1,5 @@
 angular.module('mainApp').controller('registerController',function($scope,$rootScope,RegistrationService, $location){
-   console.log("in registerController");
+  //  console.log("in registerController");
 
    (function initController() {
            // check if $rootScope.globals exist or not which means that user user credentials are loaded from cookies
@@ -27,24 +27,5 @@ angular.module('mainApp').controller('registerController',function($scope,$rootS
         }
      });
   }
-
-// var userName = "test123";
-// var password = "test";
-// var hashedPassword = cryptico.sha1(password);
-//
-//    var RSAKeys = cryptico.generateRSAKey(userName+"?"+password, 512);
-//    var rsaEncPubKey = cryptico.getPubKey(RSAKeys);
-//
-//    var RSASignKeys = cryptico.generateRSAKey("??"+password+"??"+userName+"??",512)
-//    var rsaSignPubKey = cryptico.getPubKey(RSASignKeys);
-//
-//    var client = {
-//      userName: userName,
-//      password: hashedPassword,
-//      rsaEncPubKey:rsaEncPubKey,
-//      rsaSignPubKey: rsaSignPubKey
-//    };
-
-
 
 });

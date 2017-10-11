@@ -3,7 +3,7 @@ chatService.$inject = ['$http','$rootScope', 'MainService', 'AuthenticationServi
 
 function chatService($http, $rootScope, MainService, AuthenticationService, contactsService){
 
-	console.log('in contacts service');
+	// console.log('in contacts service');
 
 	var service = {};
   service.InitChat = InitChat;
@@ -60,7 +60,7 @@ function chatService($http, $rootScope, MainService, AuthenticationService, cont
 
         return $http(req2).then(function successCallback(response){
     			if(response){
-            console.log(response);
+            // console.log(response);
     				callback(true,symmetricKey);
     			}else{
             console.log(response);

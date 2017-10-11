@@ -68,6 +68,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
 		boolean isAuthenticated;
 		boolean isValidUser;
+	
 
 		// token = {userName}:{date}:signature
 		// signature = sign(prvClient,{HashedPassword}:{date})
@@ -100,8 +101,12 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
 				boolean verfied = SignaturesUtility.performVerification(plainMessage, signature,
 						RSAUtility.reConstructPublicKey(user.getRsaPubKeySign()));
-
-				isAuthenticated = verfied ? true : false;
+				
+				if(!verfied){
+					isValidUser = isAuthenticated = false;
+				}else{
+					isAuthenticated = true;
+				}
 			}
 		}
 		// set attributes of request to booleans isValidUser and isAuthenticated

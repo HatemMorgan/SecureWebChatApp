@@ -65,7 +65,7 @@
                  }
              },
              function errorCallback(response) {
-               console.log(response.data.errMessage);
+              //  console.log(response.data.errMessage);
                alert(response.data.errMessage);
                 callback(false,null);
              });

@@ -1,5 +1,5 @@
 angular.module('mainApp').controller('ClientController',function($scope){
-console.log("clientController");
+// console.log("clientController");
 var userName1 = "RaniaWael";
 var password1= "1234";
 var RSAKeys1 = cryptico.generateRSAKey(userName1+"?"+password1, 512);

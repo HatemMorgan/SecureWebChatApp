@@ -1,10 +1,10 @@
 angular.module('mainApp').controller('loginController',function($scope,$location,$rootScope, AuthenticationService){
-  console.log("in loginController");
+  // console.log("in loginController");
 
   (function initController() {
             // check if $rootScope.globals exist or not which means that user user credentials are loaded from cookies
             if($rootScope.globals && $rootScope.globals.currentUser ){
-              console.log($rootScope.globals);
+              // console.log($rootScope.globals);
               $location.path('/home');
             }else{
              // reset login status
@@ -16,7 +16,7 @@ angular.module('mainApp').controller('loginController',function($scope,$location
          })();
 
   $scope.login = function login() {
-    console.log("hereee");
+    // console.log("hereee");
         // enable dataLoading to show loading gif
         $scope.dataLoading = true;
         // call AuthenticationService to login

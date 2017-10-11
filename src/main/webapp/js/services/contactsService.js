@@ -3,7 +3,7 @@ contactsService.$inject = ['$http','$rootScope', 'MainService', 'AuthenticationS
 
 function contactsService($http, $rootScope, MainService, AuthenticationService, contactsService){
 
-	console.log('in contacts service');
+	// console.log('in contacts service');
 
 	var service = {};
 	service.GetContacts = GetContacts;
@@ -29,8 +29,8 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
 				var digest = "[" + contacts.join() + "]";
 
 				MainService.GetServerSignPubKey(function(serverRSASigPubKey){
-					console.log(serverRSASigPubKey);
-					console.log(digest);
+					// console.log(serverRSASigPubKey);
+					// console.log(digest);
 					var keyParams = serverRSASigPubKey.split(":");
 					var n = keyParams[0];
 					var e = keyParams[1];
@@ -38,7 +38,7 @@ function contactsService($http, $rootScope, MainService, AuthenticationService, 
 					RSAKeyPair = cryptico.generateRSAKey("xx", 512);
 					cryptico.setPublicKey(RSAKeyPair,n,e);
 					var verified = cryptico.verify(digest,response.data.signature,RSAKeyPair);
-					console.log(verified);
+					// console.log(verified);
 				 // if the Signature is verified then return contacts
 					if(verified){
 						callback(contacts);
